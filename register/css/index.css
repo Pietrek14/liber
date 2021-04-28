@@ -1,0 +1,57 @@
+@use "sass:map";
+aside {
+  width: 38vw;
+  height: 100vh;
+  background-color: #8845f5;
+}
+
+article {
+  width: 62vw;
+  height: 100vh;
+  gap: 90px;
+}
+
+@media (max-width: 768px) {
+  article {
+    width: 100vw;
+    gap: 50px;
+  }
+}
+
+h3 {
+  font-size: 100px;
+  font-weight: 300;
+  color: #707070;
+}
+
+@media (max-width: 768px) {
+  h3 {
+    font-size: 72px;
+  }
+}
+
+section {
+  gap: 15px;
+}
+
+form {
+  gap: 25px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  padding: 10px;
+  min-width: 300px;
+  border: 1px solid #707070;
+}
+
+button {
+  background-color: #8845f5;
+  border: 1px solid #707070;
+  color: #e3e3e3;
+  width: 150px;
+  height: 50px;
+  font-size: 21px;
+}
+/*# sourceMappingURL=index.css.map */
