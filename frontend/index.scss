@@ -1,0 +1,55 @@
+@import "./vars";
+
+.search-bar {
+	width: 500px;
+}
+
+header {
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	height: 150px;
+	padding: 10px;
+	background-color: $color-1;
+}
+
+h1 {
+	color: $color-3;
+	font-weight: normal;
+	font-size: 45px;
+}
+
+.search-bar {
+	border: 1px solid $color-2;
+}
+
+.borgar-menu {
+	width: 58px;
+	gap: 8px;
+}
+
+.borgar-menu:hover {
+	cursor: pointer;
+}
+
+.borgar-menu > div {
+	width: 100%;
+	padding: 4.5px;
+	background-color: $color-4;
+}
+
+.alert-box {
+	position: fixed;
+	top: 0;
+	font-size: 0;
+	opacity: 0;
+	transition: 1500ms;
+}
+
+.alert-box.active {
+	top: 50vh;
+	transform: translateY(-50%);
+}
+
+.alert-box-close {
+}
