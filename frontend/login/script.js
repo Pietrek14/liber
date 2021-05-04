@@ -140,5 +140,5 @@ submitButton.onclick = async (e) => {
 	window.localStorage.removeItem("session");
 	window.localStorage.setItem("session", JSON.stringify(data.session));
 
-	alert("Zalogowano poprawnie");
+	window.location = "../index.html";
 };

@@ -48,6 +48,8 @@ async function registerSession(email, lifetime) {
 
 		return session;
 	});
+
+	return session;
 }
 
 module.exports = { registerReader, registerSession };

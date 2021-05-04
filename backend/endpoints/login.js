@@ -58,9 +58,10 @@ router.post("/", async (req, res) => {
 		return;
 	}
 
-	const session = registerSession(data.email, 30 * 24 * 60 * 60 * 1000);
+	const session = await registerSession(data.email, 30 * 24 * 60 * 60 * 1000);
+	console.log(session);
 
-	if (!session) {
+	if (session === false) {
 		error("Wystąpił błąd serwera.", res, 500);
 		return;
 	}
