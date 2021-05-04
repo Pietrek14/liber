@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const register = require("./endpoints/register");
 const login = require("./endpoints/login");
@@ -8,7 +10,7 @@ const login = require("./endpoints/login");
 const app = express();
 
 mongoose.connect(
-	"mongodb+srv://admin:admin@liber.4efko.mongodb.net/liber?retryWrites=true&w=majority",
+	`mongodb+srv://admin:${process.env.DATABASE_PASSWORD}@liber.4efko.mongodb.net/liber?retryWrites=true&w=majority`,
 	{
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
