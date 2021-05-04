@@ -1,0 +1,93 @@
+@import "../vars";
+
+aside {
+	width: 38vw;
+	height: 100vh;
+	background-color: $color-1;
+}
+
+article {
+	width: 62vw;
+	height: 100vh;
+	gap: 90px;
+}
+
+@media (max-width: map-get($bootstrap, "md")) {
+	article {
+		width: 100vw;
+		gap: 50px;
+	}
+}
+
+h3 {
+	font-size: 100px;
+	font-weight: 300;
+	color: #707070;
+}
+
+@media (max-width: map-get($bootstrap, "md")) {
+	h3 {
+		font-size: 72px;
+	}
+}
+
+section {
+	gap: 15px;
+}
+
+form {
+	gap: 25px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+	padding: 10px;
+	min-width: 300px;
+	border: 1px solid $color-2;
+}
+
+button {
+	background-color: $color-1;
+	border: 1px solid $color-2;
+	color: $color-3;
+	width: 150px;
+	height: 50px;
+	font-size: 21px;
+}
+
+.alert-box {
+	position: fixed;
+	top: 0;
+	left: 50vw;
+	transform: translateX(-50%);
+	width: 500px;
+	height: 250px;
+	padding: 10px;
+	background-color: $color-1;
+	color: $color-3;
+	font-size: 0;
+	opacity: 0;
+	transition: 1500ms;
+}
+
+.alert-box.active {
+	top: 50vh;
+	transform: translate(-50%, -50%);
+	opacity: 1;
+	font-size: 15px;
+}
+
+.alert-box-content {
+	border: 5px solid $color-3;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+	text-align: center;
+}
+
+.alert-box-close {
+	position: absolute;
+	top: 25px;
+	right: 25px;
+}

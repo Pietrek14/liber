@@ -1,0 +1,54 @@
+@use "sass:map";
+.search-bar {
+  width: 500px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 150px;
+  padding: 10px;
+  background-color: #8845f5;
+}
+
+h1 {
+  color: #e3e3e3;
+  font-weight: normal;
+  font-size: 45px;
+}
+
+.search-bar {
+  border: 1px solid #707070;
+}
+
+.borgar-menu {
+  width: 58px;
+  gap: 8px;
+}
+
+.borgar-menu:hover {
+  cursor: pointer;
+}
+
+.borgar-menu > div {
+  width: 100%;
+  padding: 4.5px;
+  background-color: #b78ff7;
+}
+
+.alert-box {
+  position: fixed;
+  top: 0;
+  font-size: 0;
+  opacity: 0;
+  -webkit-transition: 1500ms;
+  transition: 1500ms;
+}
+
+.alert-box.active {
+  top: 50vh;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+/*# sourceMappingURL=index.css.map */
