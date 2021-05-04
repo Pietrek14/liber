@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const register = require("./endpoints/register");
+const login = require("./endpoints/login");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/register", register);
+app.use("/login", login);
 
 db.on("error", () => {
 	console.log("ojoj");

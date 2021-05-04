@@ -1,4 +1,4 @@
-const serverAddress = "localhost";
+const serverAddress = "http://localhost:3000";
 
 const submitButton = document.getElementById("submit-button");
 const emailInput = document.getElementById("email-input");
@@ -132,5 +132,13 @@ submitButton.onclick = async (e) => {
 	});
 	const data = await res.json();
 
-	alert(res.status);
+	if (res.status !== 200) {
+		alert(data.message);
+		return;
+	}
+
+	window.localStorage.removeItem("session");
+	window.localStorage.setItem("session", JSON.stringify(data.session));
+
+	alert("Zalogowano poprawnie");
 };

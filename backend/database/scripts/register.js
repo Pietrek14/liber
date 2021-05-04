@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Reader = require("../models/reader");
+const Session = require("../models/session");
 const hash = require("../../hash");
 
 async function registerReader(name, email, password) {
@@ -24,11 +25,29 @@ async function registerReader(name, email, password) {
 			console.error(err);
 			return false;
 		}
+
+		console.log(`Zarejestrowano email: ${email}`);
+
+		return user;
 	});
-
-	console.log(`Zarejestrowano email: ${email}`);
-
-	return true;
 }
 
-module.exports = { registerReader };
+async function registerSession(email, lifetime) {
+	const session = new Session({
+		email: email,
+		lifetime: lifetime,
+	});
+
+	session.save((err, session) => {
+		if (err) {
+			console.error(err);
+			return false;
+		}
+
+		console.log(`Zarejestrowano sesję dla użytkownika: ${email}`);
+
+		return session;
+	});
+}
+
+module.exports = { registerReader, registerSession };

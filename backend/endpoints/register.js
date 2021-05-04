@@ -56,6 +56,11 @@ router.post("/", async (req, res) => {
 		email = data.email,
 		password = data.password;
 
+	// Sprawdz, czy wszystkie pola są defined
+	if (!validateIfUndefined(name, "Imię nie może być puste!", res)) return;
+	if (!validateIfUndefined(email, "Email nie może być pusty!", res)) return;
+	if (!validateIfUndefined(password, "Hasło nie może być puste!", res)) return;
+
 	// Sprawdz, czy wszystkie pola zostały wypełnione
 	if (!validateIfNotEmpty(name, "Imię nie może być puste!", res)) return;
 	if (!validateIfNotEmpty(email, "Email nie może być pusty!", res)) return;
@@ -120,14 +125,12 @@ router.post("/", async (req, res) => {
 		return;
 	}
 
-	const registered = await registerReader(name, email, password);
+	const user = await registerReader(name, email, password);
 
-	if (registered) {
-		res.status(200).json({ message: "pog" });
+	if (user) {
+		res.status(200).json({ message: `Witaj na Liberze, ${user.name}` });
 	} else {
-		res
-			.status(400)
-			.json({ message: "Istnieje już użytkownik o takim emailu." });
+		error("Istnieje już użytkownik o takim emailu.", res);
 	}
 });
 
