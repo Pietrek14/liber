@@ -15,15 +15,19 @@
 		<script defer src="script.js"></script>
 	</head>
 	<body>
-		<header class="d-flex justify-content-around align-items-center">
+		<header
+			class="d-flex flex-column flex-md-row justify-content-around align-items-center"
+		>
 			<h1>Liber</h1>
-			<nav class="d-flex justify-content-around align-items-center gap-5">
+			<nav
+				class="d-flex flex-column flex-md-row justify-content-around align-items-center"
+			>
 				<form action="" id="search-form">
 					<input
 						type="text"
 						id="search-bar"
-						class="search-bar"
-						placeholder="🔎Wyszukaj"
+						class="search-bar p-1 pe-2 ps-2"
+						placeholder="Wyszukaj"
 					/>
 				</form>
 				<div id="borgar-menu" class="d-flex flex-column borgar-menu">
@@ -33,14 +37,7 @@
 				</div>
 			</nav>
 		</header>
-		<main id="content" class="content">a</main>
-		<aside
-			id="not-logged-in"
-			class="not-logged-in p-5 d-flex flex-column gap-4 justify-content-center text-center"
-		>
-			<h5 class="h1">Nie zalogowano</h5>
-			<a href="login/index.html">Wciśnij tu, aby się zalogować</a>
-		</aside>
+		<main id="content" class="content"></main>
 
 		<aside
 			id="alert-box"

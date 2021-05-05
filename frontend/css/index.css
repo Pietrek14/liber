@@ -15,11 +15,16 @@ header {
 h1 {
   color: #e3e3e3;
   font-weight: normal;
-  font-size: 45px;
+  font-size: 65px;
+}
+
+nav {
+  gap: 150px;
 }
 
 .search-bar {
   border: 1px solid #707070;
+  font-size: 21px;
 }
 
 .borgar-menu {
@@ -82,5 +87,9 @@ h1 {
   position: absolute;
   top: 25px;
   right: 25px;
+}
+
+.alert-box-close:hover {
+  cursor: pointer;
 }
 /*# sourceMappingURL=index.css.map */

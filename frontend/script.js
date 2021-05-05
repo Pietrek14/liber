@@ -5,12 +5,9 @@ const notLoggedIn = document.getElementById("not-logged-in");
 
 const session = JSON.parse(window.localStorage.getItem("session"));
 
+// Jeśli użytkownik jest niezalogowany
 if (session === null) {
-	// Uzytkownik niezalogowany
-	content.classList.add("d-none");
-} else {
-	// Uzytkownik zalogowany
-	notLoggedIn.classList.add("d-none");
-
-	content.innerText = `Zalogowano na sesji: ${session._id}`;
+	window.location = "./login/index.html";
 }
+
+content.innerText = `Zalogowano na sesji: ${session._id}`;

@@ -16,11 +16,22 @@ header {
 h1 {
 	color: $color-3;
 	font-weight: normal;
-	font-size: 45px;
+	font-size: 65px;
 }
+
+nav {
+	gap: 150px;
+}
+
+// @media (max-width: map-get($bootstrap, "lg")) {
+// 	nav {
+// 		gap: 25px;
+// 	}
+// }
 
 .search-bar {
 	border: 1px solid $color-2;
+	font-size: 21px;
 }
 
 .borgar-menu {
@@ -80,4 +91,8 @@ h1 {
 	position: absolute;
 	top: 25px;
 	right: 25px;
+}
+
+.alert-box-close:hover {
+	cursor: pointer;
 }
