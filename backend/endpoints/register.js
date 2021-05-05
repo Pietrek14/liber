@@ -1,11 +1,42 @@
 const { Router } = require("express");
 const { registerReader } = require("../database/scripts/register");
+const fs = require("fs");
+const mongoose = require("mongoose");
+const Reader = require("../database/models/reader");
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+dotenv.config({ path: "../.env" });
 
 const router = Router();
 
 function error(errorMessage, res, code = 400) {
 	res.status(code).json({ message: errorMessage });
 }
+
+function generateCode(length) {
+	let result = [];
+	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	const charactersLength = characters.length;
+
+	for (let i = 0; i < length; i++) {
+		result.push(
+			characters.charAt(Math.floor(Math.random() * charactersLength))
+		);
+	}
+
+	return result.join("");
+}
+
+const transporter = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		user: process.env.EMAIL,
+		pass: process.env.EMAIL_PASSWORD,
+	},
+	tls: {
+		rejectUnauthorized: false,
+	},
+});
 
 function validateIfUndefined(value, errorMessage, res) {
 	if (value === undefined) {
@@ -124,14 +155,55 @@ router.post("/", async (req, res) => {
 	) {
 		return;
 	}
+	const sameEmailUsers = await Reader.find({ email: email }).exec();
 
-	const user = await registerReader(name, email, password);
-
-	if (user) {
-		res.status(200).json({ message: `Witaj na Liberze, ${user.name}` });
-	} else {
+	if (sameEmailUsers.length !== 0) {
 		error("Istnieje już użytkownik o takim emailu.", res);
+		return;
 	}
+
+	const verification_code = generateCode(6);
+
+	fs.readFile("./email.html", "utf8", async (err, email_content) => {
+		if (err) {
+			console.log(err);
+			error("Wystąpił błąd serwera", res, 500);
+			return;
+		}
+
+		email_content = email_content.replace("${code}", verification_code);
+
+		const mailOptions = {
+			from: process.env.EMAIL,
+			to: email,
+			subject: "Weryfikacja utworzenia konta na Liberze",
+			html: email_content,
+		};
+
+		transporter.sendMail(mailOptions, async (error, info) => {
+			if (error) {
+				console.log(error);
+				error("Wystąpił błąd serwera", res, 500);
+				return;
+			}
+
+			console.log("Email sent: " + info.response);
+
+			const user = await registerReader(
+				name,
+				email,
+				password,
+				verification_code
+			);
+
+			if (!user) {
+				error("Wystąpił błąd serwera.", res, 500);
+				return;
+			}
+
+			res.status(200).json({ message: `Witaj na Liberze, ${user.name}` });
+		});
+	});
 });
 
 module.exports = router;
