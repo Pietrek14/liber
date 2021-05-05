@@ -1,7 +1,5 @@
 const { Router } = require("express");
-const { registerSession } = require("../database/scripts/register");
 const Reader = require("../database/models/reader");
-const hash = require("../hash");
 
 const router = Router();
 
@@ -15,20 +13,22 @@ router.post("/", async (req, res) => {
 	const data = req.body;
 
 	const email = data.email,
-		password = data.password;
+		code = data.code;
 
 	// Sprawdz, czy wszystkie pola są defined
 	if (!validateIfUndefined(email, "Email nie może być pusty!", res)) return;
-	if (!validateIfUndefined(password, "Hasło nie może być puste!", res)) return;
+	if (!validateIfUndefined(code, "Nie podano kodu weryfikacyjnego.", res))
+		return;
 
 	// Sprawdz, czy wszystkie pola zostały wypełnione
 	if (!validateIfNotEmpty(email, "Email nie może być pusty!", res)) return;
-	if (!validateIfNotEmpty(password, "Hasło nie może być puste!", res)) return;
+	if (!validateIfNotEmpty(code, "Nie podano kodu weryfikacyjnego.", res))
+		return;
 
-	const users = await Reader.find({ email: email });
+	const users = await Reader.find({ email: email }).exec();
 
 	if (users.length === 0) {
-		error("Nie istnieje konto o tym emailu.", res);
+		error("Nie istnieje użytkownik o takim emailu.", res);
 		return;
 	}
 
@@ -39,20 +39,25 @@ router.post("/", async (req, res) => {
 
 	const user = users[0];
 
-	if (hash(data.password) != user.password) {
-		error("Niepoprawne hasło.", res);
+	if (code !== user.verification_code) {
+		error("Podano błędny kod weryfikacyjny.", res);
 		return;
 	}
 
-	const session = await registerSession(data.email, 30 * 24 * 60 * 60 * 1000);
-	console.log(session);
-
-	if (session === false) {
-		error("Wystąpił błąd serwera.", res, 500);
+	if (user.verified) {
+		error("Ten użytkownik został już zweryfikowany.", res);
 		return;
 	}
 
-	res.status(200).json({ session: session });
+	Reader.updateOne({ email: email }, { verified: true }, (err, _res) => {
+		if (err) {
+			console.error(err);
+			error("Wystąpił błąd serwera.", res, 500);
+			return;
+		}
+
+		res.status(200).json({ message: "Zweryfikowano użytkownika." });
+	});
 });
 
 module.exports = router;
