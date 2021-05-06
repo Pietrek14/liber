@@ -1,54 +1,37 @@
 const { Router } = require("express");
 const { registerReader } = require("../database/scripts/register");
+const fs = require("fs");
+const Reader = require("../database/models/reader");
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+dotenv.config({ path: "../.env" });
+
+const error = require("./scripts/error");
+const {
+	validateIfUndefined,
+	validateIfNotEmpty,
+	validateMaxLength,
+	validateMinLength,
+	validateRegex,
+	validateEmail,
+} = require("./scripts/validation");
+const generateCode = require("./scripts/generateCode");
+const sendMail = require("./scripts/sendMail");
+
+const emailContents = fs.readFileSync("./email.html").toString();
 
 const router = Router();
 
-function error(errorMessage, res, code = 400) {
-	res.status(code).json({ message: errorMessage });
-}
-
-function validateIfUndefined(value, errorMessage, res) {
-	if (value === undefined) {
-		error(errorMessage, res);
-		return false;
-	}
-	return true;
-}
-
-function validateIfNotEmpty(value, errorMessage, res) {
-	if (value.length === 0) {
-		error(errorMessage, res);
-		return false;
-	}
-	return true;
-}
-
-function validateRegex(value, regex, errorMessage, res) {
-	if (regex.test(value)) return true;
-	error(errorMessage, res);
-	return false;
-}
-
-function validateEmail(email, errorMessage, res) {
-	const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-	return validateRegex(String(email).toLowerCase(), re, errorMessage, res);
-}
-
-function validateMinLength(value, length, errorMessage, res) {
-	if (value.length < length) {
-		error(errorMessage, res);
-		return false;
-	}
-	return true;
-}
-
-function validateMaxLength(value, length, errorMessage, res) {
-	if (value.length > length) {
-		error(errorMessage, res);
-		return false;
-	}
-	return true;
-}
+const transporter = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		user: process.env.EMAIL,
+		pass: process.env.EMAIL_PASSWORD,
+	},
+	tls: {
+		rejectUnauthorized: false,
+	},
+});
 
 router.post("/", async (req, res) => {
 	const data = req.body;
@@ -125,13 +108,39 @@ router.post("/", async (req, res) => {
 		return;
 	}
 
-	const user = await registerReader(name, email, password);
+	const sameEmailUsers = await Reader.find({ email: email }).exec();
 
-	if (user) {
-		res.status(200).json({ message: `Witaj na Liberze, ${user.name}` });
-	} else {
+	if (sameEmailUsers.length !== 0) {
 		error("Istnieje już użytkownik o takim emailu.", res);
+		return;
 	}
+
+	const verification_code = generateCode(6);
+
+	if (err) {
+		console.log(err);
+		error("Wystąpił błąd serwera", res, 500);
+		return;
+	}
+
+	const emailContent = emailContents.replace("${code}", verification_code);
+
+	sendMail(
+		transporter,
+		process.env.EMAIL,
+		email,
+		"Weryfikacja utworzenia konta na Liberze",
+		emailContent
+	);
+
+	const user = await registerReader(name, email, password, verification_code);
+
+	if (!user) {
+		error("Wystąpił błąd serwera.", res, 500);
+		return;
+	}
+
+	res.status(200).json({ message: `Witaj na Liberze, ${user.name}` });
 });
 
 module.exports = router;

@@ -20,9 +20,7 @@ function hideAlertBox() {
 alertBoxClose.onclick = hideAlertBox;
 
 document.addEventListener("keydown", (e) => {
-	if (e.key === "Escape") {
-		hideAlertBox();
-	}
+	hideAlertBox();
 });
 
 function validateIfNotEmpty(value, errorMessage) {

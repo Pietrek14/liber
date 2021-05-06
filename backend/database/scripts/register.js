@@ -3,7 +3,7 @@ const Reader = require("../models/reader");
 const Session = require("../models/session");
 const hash = require("../../hash");
 
-async function registerReader(name, email, password) {
+async function registerReader(name, email, password, verification_code) {
 	const sameEmailUsers = await Reader.find({ email: email }).exec();
 
 	if (sameEmailUsers.length !== 0) {
@@ -16,8 +16,8 @@ async function registerReader(name, email, password) {
 		password: hash(password),
 		borrows: [],
 		ratings: [],
-		verified: true,
-		verification_code: "",
+		verified: false,
+		verification_code: verification_code,
 	});
 
 	user.save((err, user) => {
@@ -25,11 +25,11 @@ async function registerReader(name, email, password) {
 			console.error(err);
 			return false;
 		}
-
-		console.log(`Zarejestrowano email: ${email}`);
-
-		return user;
 	});
+
+	console.log(`Zarejestrowano email: ${email}`);
+
+	return user;
 }
 
 async function registerSession(email, lifetime) {

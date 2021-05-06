@@ -21,9 +21,7 @@ function hideAlertBox() {
 alertBoxClose.onclick = hideAlertBox;
 
 document.addEventListener("keydown", (e) => {
-	if (e.key === "Escape") {
-		hideAlertBox();
-	}
+	hideAlertBox();
 });
 
 function validateIfNotEmpty(value, errorMessage) {
@@ -67,11 +65,6 @@ submitButton.onclick = async (e) => {
 	const name = nameInput.value;
 	const email = emailInput.value;
 	const password = passwordInput.value;
-
-	// Sprawdz, czy wszystkie pola są defined
-	if (!validateIfNotEmpty(name, "Imię nie może być puste!")) return;
-	if (!validateIfNotEmpty(email, "Email nie może być pusty!")) return;
-	if (!validateIfNotEmpty(password, "Hasło nie może być puste!")) return;
 
 	// Sprawdz, czy wszystkie pola zostały wypełnione
 	if (!validateIfNotEmpty(name, "Imię nie może być puste!")) return;
@@ -141,9 +134,10 @@ submitButton.onclick = async (e) => {
 	});
 	const data = await res.json();
 
-	if (res.status === 400) {
+	if (res.status !== 200) {
 		alert(data.message);
-	} else if (res.status === 200) {
-		alert("Zarejestrowano pomyślnie.");
+		return;
 	}
+
+	window.location = `../verifyRegister/index.html?email=${email}`;
 };

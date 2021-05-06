@@ -6,7 +6,8 @@ dotenv.config();
 
 const register = require("./endpoints/register");
 const login = require("./endpoints/login");
-const remindPassword = require("./endpoints/remindPassword");
+const verifyEmail = require("./endpoints/verifyEmail");
+const resendCode = require("./endpoints/resendCode");
 
 const app = express();
 
@@ -29,7 +30,8 @@ app.use(cors());
 
 app.use("/register", register);
 app.use("/login", login);
-app.use("/remindpassword", remindPassword);
+app.use("/verifyemail", verifyEmail);
+app.use("/resendcode", resendCode);
 
 db.on("error", () => {
 	console.log("ojoj");
