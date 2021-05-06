@@ -117,12 +117,6 @@ router.post("/", async (req, res) => {
 
 	const verification_code = generateCode(6);
 
-	if (err) {
-		console.log(err);
-		error("Wystąpił błąd serwera", res, 500);
-		return;
-	}
-
 	const emailContent = emailContents.replace("${code}", verification_code);
 
 	sendMail(
