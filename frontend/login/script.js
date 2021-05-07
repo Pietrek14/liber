@@ -1,4 +1,4 @@
-const serverAddress = "http://localhost:3000";
+import { serverAddress } from "../scripts/constants.js";
 
 const submitButton = document.getElementById("submit-button");
 const emailInput = document.getElementById("email-input");

@@ -9,6 +9,8 @@ const login = require("./endpoints/login");
 const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
 
+const UNVERIFIED_USER_LIFETIME = 24 * 60 * 60 * 1000;
+
 const app = express();
 
 mongoose.connect(
@@ -32,6 +34,18 @@ app.use("/register", register);
 app.use("/login", login);
 app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
+
+const Reader = require("./database/models/reader");
+
+// Usuwanie niezweryfikowanych kont
+setInterval(async () => {
+	const time = new Date(Date.now() - UNVERIFIED_USER_LIFETIME);
+
+	await Reader.deleteMany({
+		verified: false,
+		account_creation_date: { $lt: time },
+	}).exec();
+}, UNVERIFIED_USER_LIFETIME);
 
 db.on("error", () => {
 	console.log("ojoj");
