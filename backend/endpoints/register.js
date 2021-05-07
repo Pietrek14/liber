@@ -18,7 +18,9 @@ const {
 const generateCode = require("./scripts/generateCode");
 const sendMail = require("./scripts/sendMail");
 
-const emailContents = fs.readFileSync("./email.html").toString();
+const emailContents = fs
+	.readFileSync("./assets/emails/verificationEmail.html")
+	.toString();
 
 const router = Router();
 
