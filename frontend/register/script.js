@@ -9,6 +9,59 @@ const alertBox = document.getElementById("alert-box");
 const alertBoxContent = document.getElementById("alert-box-content");
 const alertBoxClose = document.getElementById("alert-box-close");
 
+const cookiesBox = document.getElementById("cookies-section");
+const cookiesButton = document.getElementById("allowing-cookies");
+
+function getCookie(c_name){
+    var c_value = document.cookie;
+    var c_start = c_value.indexOf(" " + c_name + "=");
+    if (c_start == -1){
+        c_start = c_value.indexOf(c_name + "=");
+    }
+    if (c_start == -1){
+        c_value = null;
+    }
+    else{
+        c_start = c_value.indexOf("=", c_start) + 1;
+        var c_end = c_value.indexOf(";", c_start);
+            if (c_end == -1){
+                c_end = c_value.length;
+            }
+        c_value = unescape(c_value.substring(c_start,c_end));
+    }
+    return c_value;
+}
+
+function isCookie(){
+	let cookieAccept = getCookie("allowCookies");
+	
+	if (cookieAccept === "True"){
+		cookiesBox.style.display = "none";
+		console.log("masz cookie");
+		
+	} else{
+		console.log("NO NIE MASZ NO")
+		emailInput.disabled = true;
+		passwordInput.disabled = true;
+		nameInput.disabled = true;
+		submitButton.disabled = true;
+	}
+}
+function setCookie(c_name,value,exdays){
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+    document.cookie=c_name + "=" + c_value;
+
+	emailInput.disabled = false;
+	passwordInput.disabled = false;
+	nameInput.disabled = false;
+	submitButton.disabled = false;
+
+	cookiesBox.style.display = "none";
+}
+
+
 function alert(message) {
 	alertBoxContent.innerText = message;
 	alertBox.classList.add("active");
@@ -141,3 +194,8 @@ submitButton.onclick = async (e) => {
 
 	window.location = `../verifyRegister/index.html?email=${email}`;
 };
+cookiesButton.addEventListener("click", 
+	function () {
+		setCookie("allowCookies", "True", null);
+	})
+window.onload = isCookie();
