@@ -1,3 +1,9 @@
+// musze na poczatku wyslac email z kodem ktory gdzies zapisuje
+// email biore z formularza (ktore musze ogarnac) 
+// chyba musze mie drugi plik ktory sprawdzi czy kod podany przez uzytkowinka zgadza sie z tym gdzies zapisanym
+// na koncu chyba moge po prostu skopiowac kod z rejestracji uzytkowika
+
+
 const { Router } = require("express");
 const nodemailer = require("nodemailer");
 const Reader = require("../database/models/reader");
@@ -37,7 +43,7 @@ router.get("/", async (req, res) => {
 
 
     // to chyba pobiera dane uzytkownika o e-mialu ktory biore,
-    // nie mam pojecia z kad biore ten email, ale wsadza go to tej ladnej zmiennej
+    // nie mam pojecia z kad 
     const user = await Reader.findOne({ email: email }).exec();
 
     if (!user) {
