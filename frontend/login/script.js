@@ -1,4 +1,4 @@
-const serverAddress = "http://localhost:3000";
+import { serverAddress } from "../scripts/constants.js";
 
 const submitButton = document.getElementById("submit-button");
 const emailInput = document.getElementById("email-input");
@@ -134,9 +134,6 @@ submitButton.onclick = async (e) => {
 		alert(data.message);
 		return;
 	}
-
-	window.localStorage.removeItem("session");
-	window.localStorage.setItem("session", JSON.stringify(data.session));
 
 	window.location = "../index.html";
 };

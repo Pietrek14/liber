@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const passwordChangeSchema = new Schema({
 	email: String,
     code: String,
-    creationDate: Date,
+    creationDate: { type: Date, default: Date.now },
 	lifetime: Number, // Czas do wygasniecia sesji w ms
 });
 

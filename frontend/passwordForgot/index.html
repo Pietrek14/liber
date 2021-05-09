@@ -18,7 +18,11 @@
 		<article
 			class="d-flex flex-column align-items-center justify-content-center"
 		>
-			<h3>Zarejestruj się</h3>
+			<h3>Weryfikacja Emaila</h3>
+			<h5>
+				Wysłaliśmy kod weryfikacyjny na twój adres email. Aby zweryfikować swoje
+				konto, wpisz go poniżej.
+			</h5>
 			<section
 				class="d-flex flex-column align-items-center justify-content-center"
 			>
@@ -26,16 +30,15 @@
 					class="d-flex flex-column align-items-center justify-content-center mb-5"
 				>
 					<div class="d-flex flex-column gap-2">
-						<input type="text" id="name-input" placeholder="Imię" />
-						<input type="email" id="email-input" placeholder="Email" />
-						<input type="password" id="password-input" placeholder="Hasło" />
+						<input type="text" id="verification-code" placeholder="Kod" />
 					</div>
-					<button id="submit-button">Zatwierdź</button>
+					<button id="submit-button">Wyślij</button>
 				</form>
 				<span
-					>Masz już konto? <a href="../login/index.html">Zaloguj się</a></span
-				>
-				<!-- <span><a href="../index.html">Wróć na stronę główną</a></span> -->
+					>Nie widzisz żadnego emaila?
+					<a href="" id="resend-code">Wyślij email ponownie</a>
+				</span>
+				<span><a href="../index.html">Wróć na stronę główną</a></span>
 			</section>
 		</article>
 		<aside class="purple d-none d-md-block"></aside>

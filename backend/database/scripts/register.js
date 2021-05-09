@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Reader = require("../models/reader");
 const Session = require("../models/session");
+const PasswordChange = require("../models/passwordChanges");
 const hash = require("../../hash");
 
 async function registerReader(name, email, password, verification_code) {
@@ -45,11 +46,27 @@ async function registerSession(email, lifetime) {
 		}
 
 		console.log(`Zarejestrowano sesję dla użytkownika: ${email}`);
-
-		return session;
 	});
 
 	return session;
 }
 
-module.exports = { registerReader, registerSession };
+async function registerPasswordChange(email, code) {
+	const passwordChange = new PasswordChange({
+		email: email,
+		code: code,
+		lifetime: 43200000, // 12h in ms
+	});
+
+	passwordChange.save((err, passwordChange) => {
+		if (err) {
+			console.error(err);
+			return false;
+		}
+
+		console.log(`Zarejestrowano sesję zmiany hasla: ${email}`);
+	});
+	return passwordChange;
+}
+
+module.exports = { registerReader, registerSession, registerPasswordChange };

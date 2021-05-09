@@ -5,6 +5,7 @@
 
 
 const { Router } = require("express");
+const { registerPasswordChange } = require("../database/scripts/register");
 const nodemailer = require("nodemailer");
 const Reader = require("../database/models/reader");
 const PasswordChange = require("../database/models/passwordChanges");
@@ -52,16 +53,23 @@ router.get("/", async (req, res) => {
 
 	// sprawdzanie czy dany uzytkownik istnieje
     const user = await Reader.findOne({ email: email }).exec();
+	const emailInDatabase = await PasswordChange.findOne({email: email}).exec();
 
     if (!user) {
 		error("Nie ma takiego użytkownika.", res);
 		return;
 	}
 
+	// idiotyczne rozwiazanie dla debili
+	if(!emailInDatabase) {
+		error("Email został już wysłany.", res);
+	}
+
+	const code = generateCode(16);
+	const link = "" + code + ""; // sex
+
 
 	// email shit here
-	const link = "" + generateCode(16) + "";
-
 	const email_content = emailContents.replace(
 		"${code}",
 		link
@@ -74,6 +82,14 @@ router.get("/", async (req, res) => {
 		"Przywrócenie konta na Liberze",
 		email_content
 	);
+
+	// database shit here
+	const passwordChange = await registerPasswordChange(email, code);
+
+	if (!passwordChange) {
+		error("Wystąpił błąd serwera.", res, 500);
+		return;
+	}
 
 	res.status(200).json({ message: "Wysłano email" });
 });

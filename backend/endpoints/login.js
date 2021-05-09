@@ -3,6 +3,8 @@ const { registerSession } = require("../database/scripts/register");
 const Reader = require("../database/models/reader");
 const hash = require("../hash");
 
+// const SESSION_LIFETIME = 31 * 24 * 60 * 60 * 1000;
+
 const router = Router();
 
 const error = require("./scripts/error");
@@ -52,7 +54,18 @@ router.post("/", async (req, res) => {
 		return;
 	}
 
-	res.status(200).json({ session: session });
+	let expirationDate = new Date();
+	expirationDate.setMonth(expirationDate.getMonth() + 1);
+
+	console.log(expirationDate);
+
+	res
+		.status(200)
+		.cookie("session", session, {
+			httpOnly: true,
+			expires: expirationDate,
+		})
+		.json({ message: "Zalogowano poprawnie." });
 });
 
 module.exports = router;
