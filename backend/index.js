@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -8,6 +9,7 @@ const register = require("./endpoints/register");
 const login = require("./endpoints/login");
 const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
+const getName = require("./endpoints/getName");
 
 const UNVERIFIED_USER_LIFETIME = 24 * 60 * 60 * 1000;
 
@@ -28,12 +30,20 @@ mongoose.connect(
 const db = mongoose.connection;
 
 app.use(express.json());
-app.use(cors());
+app.use(
+	cors({
+		origin: "http://127.0.0.1:5500",
+		credentials: true,
+	})
+);
+app.use(cookieParser());
 
+// Endpointy
 app.use("/register", register);
 app.use("/login", login);
 app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
+app.use("/getname", getName);
 
 const Reader = require("./database/models/reader");
 

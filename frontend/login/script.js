@@ -135,8 +135,5 @@ submitButton.onclick = async (e) => {
 		return;
 	}
 
-	window.localStorage.removeItem("session");
-	window.localStorage.setItem("session", JSON.stringify(data.session));
-
 	window.location = "../index.html";
 };
