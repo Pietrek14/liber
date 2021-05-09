@@ -7,11 +7,20 @@
 const { Router } = require("express");
 const nodemailer = require("nodemailer");
 const Reader = require("../database/models/reader");
+const PasswordChange = require("../database/models/passwordChanges");
+const dotenv = require("dotenv");
+dotenv.config({ path: "../.env" });
+
+const generateCode = require("./scripts/generateCode");
 
 const sendMail = require("./scripts/sendMail");
 const error = require("./scripts/error");
 
 const router = Router();
+
+const emailContents = fs
+	.readFileSync("./assets/emails/passwordChangeEmail.html")
+	.toString();
 
 // nie mam pojecia co sie tu dzieje, nawet nie wiem czy
 // to dziala ale zaufam dawidowi
@@ -41,9 +50,7 @@ router.get("/", async (req, res) => {
 
     const email = data.email;
 
-
-    // to chyba pobiera dane uzytkownika o e-mialu ktory biore,
-    // nie mam pojecia z kad 
+	// sprawdzanie czy dany uzytkownik istnieje
     const user = await Reader.findOne({ email: email }).exec();
 
     if (!user) {
@@ -51,7 +58,25 @@ router.get("/", async (req, res) => {
 		return;
 	}
 
-    
+
+	// email shit here
+	const link = "" + generateCode(16) + "";
+
+	const email_content = emailContents.replace(
+		"${code}",
+		link
+	);
+
+	sendMail(
+		transporter,
+		process.env.EMAIL,
+		email,
+		"Przywrócenie konta na Liberze",
+		email_content
+	);
+
+	res.status(200).json({ message: "Wysłano email" });
 });
+
 
 module.exports = router;
