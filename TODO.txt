@@ -1,0 +1,5 @@
+UX i UI 
+zapebespieczenie i walidacja hasla
+dodanie lepszego ponownego wysylania hasla
+
+ogolnie zrobienie pliku reset password i sprawdzanie czy link jest w bazie danych zanim poprosimy o nowe haslo
