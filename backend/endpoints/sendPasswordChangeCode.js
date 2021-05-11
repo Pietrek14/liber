@@ -5,7 +5,6 @@
 
 
 const { Router } = require("express");
-const { registerPasswordChange } = require("../database/scripts/register");
 const nodemailer = require("nodemailer");
 const Reader = require("../database/models/reader");
 const fs = require("fs");
@@ -60,12 +59,12 @@ router.post("/", async (req, res) => {
 	// to niby sprawdza czy dany email jest w bazie danych i jak tak jest to go nie wysyla
 	// musze dodac funckje ponownego wysylania emiala
 	if(emailInDatabase) {
-		error("Email został już wysłany.", res);
+		await PasswordChange.deleteOne({email: email});
 		return;
 	}
 
 	const code = generateCode(16);
-	const link = `localhost:5500/resetPassword/index.html?code=${code}`; 
+	const link = `localhost:5500/resetPassword/index.html?code=${code}`;
 
 
 	// email shit here
@@ -89,6 +88,8 @@ router.post("/", async (req, res) => {
 		error("Wystąpił błąd serwera.", res, 500);
 		return;
 	}
+	
+	console.log(email_content);
 
 	res.status(200).json({ message: "Wysłano email" });
 });

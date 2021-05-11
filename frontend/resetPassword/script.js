@@ -1,11 +1,17 @@
+// pietreks shit
 import { serverAddress } from "../scripts/constants.js";
 
-const submitemail = document.getElementById("email");
+const submitPass1 = document.getElementById("password1");
+const submitPass2 = document.getElementById("password2");
 const submitButton = document.getElementById("submit-button");
 
 const alertBox = document.getElementById("alert-box");
 const alertBoxContent = document.getElementById("alert-box-content");
 const alertBoxClose = document.getElementById("alert-box-close");
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const code = urlParams.get("code");
 
 function alert(message) {
 	alertBoxContent.innerText = message;
@@ -29,22 +35,32 @@ function validateIfNotEmpty(value, errorMessage) {
 	}
 	return true;
 }
-
+// glowna funkcja
 submitButton.onclick = async (e) => {
 	e.preventDefault();
 
-	const email = submitemail.value;
+	const pass1 = submitPass1.value;
+	const pass2 = submitPass2.value;
 
 	// Sprawdz, czy wszystkie pola zostały wypełnione
-	if (!validateIfNotEmpty(email, "Nie wpisano emailu.")) return;
+	if (!validateIfNotEmpty(pass1, "Nie wpisano hasła")) return;
+	if (!validateIfNotEmpty(pass2, "Nie wpisano hasła")) return;
 
-	const res = await fetch(`${serverAddress}/sendpasswordchange`, {
+	// sprawdz czy hasla sa takie same
+	if (pass1 != pass2) {
+		alert("Hasła nie są takie same")
+		return;
+	} 
+	
+	// wysylanie na serwer
+	const res = await fetch(`${serverAddress}/resetPass`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			email: email,
+			newPassword: pass1,
+			code: code,
 		}),
 	});
 
@@ -53,9 +69,7 @@ submitButton.onclick = async (e) => {
 	}
 	const data = await res.json();
 
-	if (res.status === 400) {
-		alert(data.message);
-	} else if (res.status === 200) {
-		alert(data.message);
-	}
+	
+	alert(data.message);
+	
 };
