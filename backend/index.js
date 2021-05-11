@@ -5,13 +5,17 @@ const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 dotenv.config();
 
+// Importy endpointów
 const register = require("./endpoints/register");
 const login = require("./endpoints/login");
 const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
 const getName = require("./endpoints/getName");
 
-const UNVERIFIED_USER_LIFETIME = 24 * 60 * 60 * 1000;
+// Importy rutyn
+const deleteOldSessions = require("./routines/deleteOldSessions");
+
+const DELETE_OLD_RECORDS_INTERVAL = 24 * 60 * 60 * 1000;
 
 const app = express();
 
@@ -45,17 +49,8 @@ app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
 app.use("/getname", getName);
 
-const Reader = require("./database/models/reader");
-
 // Usuwanie niezweryfikowanych kont
-setInterval(async () => {
-	const time = new Date(Date.now() - UNVERIFIED_USER_LIFETIME);
-
-	await Reader.deleteMany({
-		verified: false,
-		account_creation_date: { $lt: time },
-	}).exec();
-}, UNVERIFIED_USER_LIFETIME);
+setInterval(deleteOldSessions, DELETE_OLD_RECORDS_INTERVAL);
 
 db.on("error", () => {
 	console.log("ojoj");
