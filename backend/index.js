@@ -11,6 +11,7 @@ const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
 const getName = require("./endpoints/getName");
 const sendpasswordchange = require("./endpoints/sendPasswordChangeCode");
+const resetPassword = require("./endpoints/resetPassword");
 
 const UNVERIFIED_USER_LIFETIME = 24 * 60 * 60 * 1000;
 
@@ -46,6 +47,7 @@ app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
 app.use("/getname", getName);
 app.use("/sendpasswordchange", sendpasswordchange);
+app.use("/resetPassword", resetPassword);
 
 const Reader = require("./database/models/reader");
 
