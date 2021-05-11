@@ -8,6 +8,7 @@ const { Router } = require("express");
 const { registerPasswordChange } = require("../database/scripts/register");
 const nodemailer = require("nodemailer");
 const Reader = require("../database/models/reader");
+const fs = require("fs");
 const PasswordChange = require("../database/models/passwordChanges");
 const dotenv = require("dotenv");
 dotenv.config({ path: "../.env" });
@@ -16,6 +17,7 @@ const generateCode = require("./scripts/generateCode");
 
 const sendMail = require("./scripts/sendMail");
 const error = require("./scripts/error");
+const { ConnectionBase } = require("mongoose");
 
 const router = Router();
 
@@ -39,14 +41,8 @@ const transporter = nodemailer.createTransport({
 });
 
 
-// to chyba bledy gdzies zapisuje albo cos 
-// naprawde nie wiem
-function error(errorMessage, res, code = 400) {
-	res.status(code).json({ message: errorMessage });
-}
-
 // o ile rozumiem to jest glowna funkcja ale tego tez nie jestem pewnien
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
     const data = req.body;
 
     const email = data.email;
@@ -61,17 +57,20 @@ router.get("/", async (req, res) => {
 	}
 
 	// idiotyczne rozwiazanie dla debili
-	if(!emailInDatabase) {
+	// to niby sprawdza czy dany email jest w bazie danych i jak tak jest to go nie wysyla
+	// musze dodac funckje ponownego wysylania emiala
+	if(emailInDatabase) {
 		error("Email został już wysłany.", res);
+		return;
 	}
 
 	const code = generateCode(16);
-	const link = "" + code + ""; // sex
+	const link = `localhost:5500/resetPassword/index.html?code=${code}`; 
 
 
 	// email shit here
 	const email_content = emailContents.replace(
-		"${code}",
+		"${link}",
 		link
 	);
 
