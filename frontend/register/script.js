@@ -194,8 +194,4 @@ submitButton.onclick = async (e) => {
 
 	window.location = `../verifyRegister/index.html?email=${email}`;
 };
-cookiesButton.addEventListener("click", 
-	function () {
-		setCookie("allowCookies", "True", null);
-	})
 window.onload = isCookie();
