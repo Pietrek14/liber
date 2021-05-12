@@ -3,8 +3,6 @@ const { registerSession } = require("../database/scripts/register");
 const Reader = require("../database/models/reader");
 const hash = require("../hash");
 
-// const SESSION_LIFETIME = 31 * 24 * 60 * 60 * 1000;
-
 const router = Router();
 
 const error = require("./scripts/error");
