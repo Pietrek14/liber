@@ -13,6 +13,28 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const code = urlParams.get("code");
 
+// endpoint ktory sprawdza czy kod istnieje w bazie danych
+const init = async () => {
+	const checkCodeRequest = await fetch(`${serverAddress}/checkChangePasswordCode`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			code: code,
+		}),
+	});
+	
+	const body = await checkCodeRequest.json();
+	
+	if (body.message === "nie pog") {
+		window.location.replace("http://127.0.0.1:5500/frontend/resetPassword/nogoodcode.html");
+	}
+}; 
+
+init();
+
+// alert box shit here
 function alert(message) {
 	alertBoxContent.innerText = message;
 	alertBox.classList.add("active");
@@ -28,6 +50,7 @@ document.addEventListener("keydown", (e) => {
 	hideAlertBox();
 });
 
+// sprawdza czy nie puste lmao
 function validateIfNotEmpty(value, errorMessage) {
 	if (value.length === 0) {
 		alert(errorMessage);
@@ -53,7 +76,7 @@ submitButton.onclick = async (e) => {
 	} 
 	
 	// wysylanie na serwer
-	const res = await fetch(`${serverAddress}/resetPass`, {
+	const res = await fetch(`${serverAddress}/resetpassword`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

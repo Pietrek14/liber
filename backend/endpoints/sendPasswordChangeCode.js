@@ -7,10 +7,19 @@
 const { Router } = require("express");
 const nodemailer = require("nodemailer");
 const Reader = require("../database/models/reader");
+const { registerPasswordChange } = require("../database/scripts/register");
 const fs = require("fs");
 const PasswordChange = require("../database/models/passwordChanges");
 const dotenv = require("dotenv");
 dotenv.config({ path: "../.env" });
+const {
+	validateIfUndefined,
+	validateIfNotEmpty,
+	validateMaxLength,
+	validateMinLength,
+	validateRegex,
+	validateEmail,
+} = require("./scripts/validation");
 
 const generateCode = require("./scripts/generateCode");
 
@@ -46,6 +55,9 @@ router.post("/", async (req, res) => {
 
     const email = data.email;
 
+	if (!validateIfUndefined(email, "Email nie może być pusty!", res)) return;
+	if (!validateIfNotEmpty(email, "Email nie może być pusty!", res)) return;
+
 	// sprawdzanie czy dany uzytkownik istnieje
     const user = await Reader.findOne({ email: email }).exec();
 	const emailInDatabase = await PasswordChange.findOne({email: email}).exec();
@@ -64,7 +76,7 @@ router.post("/", async (req, res) => {
 	}
 
 	const code = generateCode(16);
-	const link = `localhost:5500/resetPassword/index.html?code=${code}`;
+	const link = `http://localhost:5500/frontend/resetPassword/index.html?code=${code}`;
 
 
 	// email shit here

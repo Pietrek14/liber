@@ -11,8 +11,9 @@ const login = require("./endpoints/login");
 const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
 const getName = require("./endpoints/getName");
-const sendpasswordchange = require("./endpoints/sendPasswordChangeCode");
-const resetPassword = require("./endpoints/sendPasswordChangeCode");
+const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
+const resetPassword = require("./endpoints/resetPassword");
+const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 
 // Importy rutyn
 const deleteOldSessions = require("./routines/deleteOldSessions");
@@ -38,7 +39,7 @@ const db = mongoose.connection;
 app.use(express.json());
 app.use(
 	cors({
-		origin: "http://127.0.0.1:5500",
+		origin: true,
 		credentials: true,
 	})
 );
@@ -50,8 +51,9 @@ app.use("/login", login);
 app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
 app.use("/getname", getName);
-app.use("/sendpasswordchange", sendpasswordchange);
-app.use("/resetPassword", resetPassword);
+app.use("/sendpasswordchange", sendPasswordChange);
+app.use("/resetpassword", resetPassword);
+app.use("/checkchangepasswordcode", checkChangePasswordCode);
 
 // Usuwanie niezweryfikowanych kont
 setInterval(deleteOldSessions, DELETE_OLD_RECORDS_INTERVAL);
