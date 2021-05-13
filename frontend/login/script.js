@@ -38,7 +38,8 @@ function validateRegex(value, regex, errorMessage) {
 }
 
 function validateEmail(email, errorMessage) {
-	const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+	const re =
+		/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 	return validateRegex(String(email).toLowerCase(), re, errorMessage);
 }
 
@@ -120,6 +121,7 @@ submitButton.onclick = async (e) => {
 
 	const res = await fetch(`${serverAddress}/login`, {
 		method: "POST",
+		credentials: "include",
 		headers: {
 			"Content-Type": "application/json",
 		},
@@ -128,6 +130,7 @@ submitButton.onclick = async (e) => {
 			password: password,
 		}),
 	});
+
 	const data = await res.json();
 
 	if (res.status !== 200) {
