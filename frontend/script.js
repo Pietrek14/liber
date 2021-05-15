@@ -1,13 +1,25 @@
-const serverAddress = "http://localhost:3000";
+import { serverAddress } from "./scripts/constants.js";
 
 const content = document.getElementById("content");
-const notLoggedIn = document.getElementById("not-logged-in");
 
-const session = JSON.parse(window.localStorage.getItem("session"));
+const init = async () => {
+	const res = await fetch(`${serverAddress}/getname`, {
+		method: "GET",
+		credentials: "include",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
 
-// Jeśli użytkownik jest niezalogowany
-if (session === null) {
-	window.location = "./login/index.html";
-}
+	const data = await res.json();
 
-content.innerText = `Zalogowano na sesji: ${session._id}`;
+	if (res.status === 401) {
+		window.location = "./login/";
+	}
+};
+
+init();
+
+const name = data.name;
+
+content.innerText = `Witaj, ${name}!`;

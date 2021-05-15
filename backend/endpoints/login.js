@@ -45,14 +45,22 @@ router.post("/", async (req, res) => {
 	}
 
 	const session = await registerSession(data.email, 30 * 24 * 60 * 60 * 1000);
-	console.log(session);
 
 	if (session === false) {
 		error("Wystąpił błąd serwera.", res, 500);
 		return;
 	}
 
-	res.status(200).json({ session: session });
+	let expirationDate = new Date();
+	expirationDate.setMonth(expirationDate.getMonth() + 1);
+
+	res
+		.status(200)
+		.cookie("session", `${session._id}`, {
+			httpOnly: true,
+			expires: expirationDate,
+		})
+		.json({ message: "Zalogowano poprawnie." });
 });
 
 module.exports = router;
