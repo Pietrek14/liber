@@ -56,6 +56,6 @@ submitButton.onclick = async (e) => {
 	if (res.status === 400) {
 		alert(data.message);
 	} else if (res.status === 200) {
-		alert(data.message);
+		window.location.replace("./emailsend.html");
 	}
 };

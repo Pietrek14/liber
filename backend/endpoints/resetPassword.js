@@ -125,7 +125,7 @@ router.post("/", async (req, res) => {
 
 	// sprawdzam czy nowe haslo jest rowne staremu haslu
 	if (user.password == newPasswordHash) {
-		error("Hasła nie mogą być takie same", res);
+		error("Nowe hasło nie może być takie samo jak stare hasło", res);
 		return;
 	}
 
@@ -138,7 +138,8 @@ router.post("/", async (req, res) => {
 			return;
 		}
 
-		res.status(200).json({ message: "Zmieniono haslo" });
+		// jak jest dobrze i wszytko dziala to jest fajnie i wysyla to gowna
+		res.status(200).send();
 	});
 
 	await PasswordChange.deleteOne({ email: email});

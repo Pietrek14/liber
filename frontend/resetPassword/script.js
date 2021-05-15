@@ -28,7 +28,7 @@ const init = async () => {
 	const body = await checkCodeRequest.json();
 	
 	if (body.message === "nie pog") {
-		window.location.replace("http://127.0.0.1:5500/frontend/resetPassword/nogoodcode.html");
+		window.location.replace("./nogoodcode.html");
 	}
 }; 
 
@@ -87,12 +87,7 @@ submitButton.onclick = async (e) => {
 		}),
 	});
 
-	if (!res.ok) {
-		console.log("nie bylo ok", res);
+	if (res.status == 200) {
+		window.location.replace("./done.html");
 	}
-	const data = await res.json();
-
-	
-	alert(data.message);
-	
 };
