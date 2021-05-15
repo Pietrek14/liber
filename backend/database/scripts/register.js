@@ -36,7 +36,6 @@ async function registerReader(name, email, password, verification_code) {
 async function registerSession(email, lifetime) {
 	const session = new Session({
 		email: email,
-		lifetime: lifetime,
 	});
 
 	session.save((err, session) => {
