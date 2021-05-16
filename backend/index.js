@@ -16,6 +16,9 @@ const resendCode = require("./endpoints/resendCode");
 // GET
 
 const getName = require("./endpoints/getName");
+const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
+const resetPassword = require("./endpoints/resetPassword");
+const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 
 // Middleware
 
@@ -59,6 +62,10 @@ app.use("/register", register);
 app.use("/login", login);
 app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
+app.use("/getname", getName);
+app.use("/sendpasswordchange", sendPasswordChange);
+app.use("/resetpassword", resetPassword);
+app.use("/checkchangepasswordcode", checkChangePasswordCode);
 
 // GET
 app.use("/getname", loginCheck, getName);
