@@ -22,6 +22,20 @@ nav {
   gap: 150px;
 }
 
+.cool-button {
+  border: 0;
+  width: 100%;
+  height: 35px;
+  background-color: #e3e3e3;
+  -webkit-transition: 1s;
+  transition: 1s;
+  color: #707070;
+}
+
+.cool-button:hover {
+  background-color: #b78ff7;
+}
+
 .search-bar {
   border: 1px solid #707070;
   font-size: 21px;

@@ -23,6 +23,19 @@ nav {
 	gap: 150px;
 }
 
+.cool-button {
+	border: 0;
+	width: 100%;
+	height: 35px;
+	background-color: $color-3;
+	transition: 1s;
+	color: $color-2;
+}
+
+.cool-button:hover {
+	background-color: $color-4;
+}
+
 .search-bar {
 	border: 1px solid $color-2;
 	font-size: 21px;
