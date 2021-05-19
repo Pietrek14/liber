@@ -8,8 +8,6 @@ module.exports = async (req, res, next) => {
 		return;
 	}
 
-	console.log(req.cookies);
-
 	// Jeśli nie ma cookie sesji
 	if (!req.cookies.session) {
 		error("Brak plików cookie sesji", res, 401);
@@ -25,6 +23,8 @@ module.exports = async (req, res, next) => {
 		return;
 	}
 
+	// Przekaż dane sesji i użytkownika w obiekcie req
+	req.session = req.cookies.session;
 	req.user = user;
 
 	next();

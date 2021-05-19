@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const Reader = require("../models/reader");
 const Session = require("../models/session");
 const PasswordChange = require("../models/passwordChanges");
@@ -41,7 +40,7 @@ async function registerSession(email, lifetime) {
 	session.save((err, session) => {
 		if (err) {
 			console.error(err);
-			return false;
+			return;
 		}
 
 		console.log(`Zarejestrowano sesję dla użytkownika: ${email}`);
