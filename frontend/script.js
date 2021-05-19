@@ -5,7 +5,7 @@ const borgarMenu = document.getElementById("borgar-menu");
 const sideBar = document.getElementById("side-bar");
 const sideBarClose = document.getElementById("side-bar-close");
 
-let sideBarOpened = false;
+const logoutButton = document.getElementById("logout-button");
 
 const init = async () => {
 	const res = await fetch(`${serverAddress}/getname`, {
@@ -32,19 +32,31 @@ init();
 function openSideBar() {
 	borgarMenu.classList.add("active");
 	sideBar.classList.add("active");
-	sideBarOpened = true;
 }
 
 function closeSideBar() {
 	borgarMenu.classList.remove("active");
 	sideBar.classList.remove("active");
-	sideBarOpened = false;
-}
-
-function toggleSideBar() {
-	if (sideBarOpened) closeSideBar();
-	else openSideBar();
 }
 
 borgarMenu.onclick = openSideBar;
 sideBarClose.onclick = closeSideBar;
+
+logoutButton.onclick = async () => {
+	const res = await fetch(`${serverAddress}/logout`, {
+		method: "POST",
+		credentials: "include",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	if (res.status === 200) {
+		window.location = "./login/";
+		return;
+	}
+
+	const data = await res.json();
+
+	alert(data.message);
+};

@@ -61,6 +61,7 @@ nav {
   position: fixed;
   right: -100%;
   top: 0;
+  padding: 100px 50px;
   width: 500px;
   height: 100vh;
   -webkit-transition: 1s;
