@@ -23,12 +23,6 @@ nav {
 	gap: 150px;
 }
 
-// @media (max-width: map-get($bootstrap, "lg")) {
-// 	nav {
-// 		gap: 25px;
-// 	}
-// }
-
 .search-bar {
 	border: 1px solid $color-2;
 	font-size: 21px;
@@ -37,6 +31,11 @@ nav {
 .borgar-menu {
 	width: 58px;
 	gap: 8px;
+	transition: 1s;
+}
+
+.borgar-menu.active {
+	transform: rotate(90deg);
 }
 
 .borgar-menu:hover {
@@ -55,6 +54,32 @@ nav {
 
 .not-logged-in {
 	margin-top: 150px;
+}
+
+.side-bar {
+	position: fixed;
+	right: -100%;
+	top: 0;
+	width: 500px;
+	height: 100vh;
+	transition: 1s;
+	background-color: $color-1;
+}
+
+.side-bar.active {
+	right: 0;
+}
+
+.side-bar-close {
+	position: absolute;
+	left: 15px;
+	top: 15px;
+	color: $color-3;
+	font-size: 25px;
+}
+
+.side-bar-close:hover {
+	cursor: pointer;
 }
 
 .alert-box {

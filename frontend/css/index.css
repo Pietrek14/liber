@@ -30,6 +30,13 @@ nav {
 .borgar-menu {
   width: 58px;
   gap: 8px;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.borgar-menu.active {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 
 .borgar-menu:hover {
@@ -48,6 +55,33 @@ nav {
 
 .not-logged-in {
   margin-top: 150px;
+}
+
+.side-bar {
+  position: fixed;
+  right: -100%;
+  top: 0;
+  width: 500px;
+  height: 100vh;
+  -webkit-transition: 1s;
+  transition: 1s;
+  background-color: #8845f5;
+}
+
+.side-bar.active {
+  right: 0;
+}
+
+.side-bar-close {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: #e3e3e3;
+  font-size: 25px;
+}
+
+.side-bar-close:hover {
+  cursor: pointer;
 }
 
 .alert-box {
