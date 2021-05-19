@@ -64,7 +64,6 @@ app.use("/login", login);
 app.use("/logout", loginCheck, logout);
 app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
-app.use("/getname", getName);
 app.use("/sendpasswordchange", sendPasswordChange);
 app.use("/resetpassword", resetPassword);
 app.use("/checkchangepasswordcode", checkChangePasswordCode);
