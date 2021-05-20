@@ -21,6 +21,7 @@ const readerSchema = new Schema({
 	verified: Boolean,
 	verification_code: String,
 	account_creation_date: { type: Date, default: Date.now },
+	whitelisted: { type: Boolean, default: false },
 });
 
 const Reader = mongoose.model("Reader", readerSchema);
