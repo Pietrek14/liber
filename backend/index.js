@@ -17,6 +17,7 @@ const resendCode = require("./endpoints/resendCode");
 // GET
 
 const getName = require("./endpoints/getName");
+const getBookInfo = require("./endpoints/getBookInfo");
 
 // Middleware
 
@@ -64,6 +65,7 @@ app.use("/resendcode", resendCode);
 
 // GET
 app.use("/getname", loginCheck, getName);
+app.use("/getbookinfo", getBookInfo);
 
 // Routines
 setInterval(deleteOldUsers, DELETE_OLD_RECORDS_INTERVAL);
