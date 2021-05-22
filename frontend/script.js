@@ -1,22 +1,62 @@
 import { serverAddress } from "./scripts/constants.js";
 
 const content = document.getElementById("content");
-const notLoggedIn = document.getElementById("not-logged-in");
+const borgarMenu = document.getElementById("borgar-menu");
+const sideBar = document.getElementById("side-bar");
+const sideBarClose = document.getElementById("side-bar-close");
 
-const res = await fetch(`${serverAddress}/getname`, {
-	method: "GET",
-	credentials: "include",
-	withCredentials: true,
-	headers: {
-		"Content-Type": "application/json",
-	},
-});
+const logoutButton = document.getElementById("logout-button");
 
-if (res.status === 403) {
-	// window.location = "./login/";
+const init = async () => {
+	const res = await fetch(`${serverAddress}/getname`, {
+		method: "GET",
+		credentials: "include",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	const data = await res.json();
+
+	if (res.status === 401) {
+		window.location = "./login/";
+	}
+
+	const name = data.name;
+
+	content.innerText = `Witaj, ${name}!`;
+};
+
+init();
+
+function openSideBar() {
+	borgarMenu.classList.add("active");
+	sideBar.classList.add("active");
 }
 
-const data = await res.json();
-const name = data.name;
+function closeSideBar() {
+	borgarMenu.classList.remove("active");
+	sideBar.classList.remove("active");
+}
 
-content.innerText = `Witaj, ${name}!`;
+borgarMenu.onclick = openSideBar;
+sideBarClose.onclick = closeSideBar;
+
+logoutButton.onclick = async () => {
+	const res = await fetch(`${serverAddress}/logout`, {
+		method: "POST",
+		credentials: "include",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	if (res.status === 200) {
+		window.location = "./login/";
+		return;
+	}
+
+	const data = await res.json();
+
+	alert(data.message);
+};

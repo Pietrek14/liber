@@ -3,8 +3,6 @@ const { registerSession } = require("../database/scripts/register");
 const Reader = require("../database/models/reader");
 const hash = require("../hash");
 
-// const SESSION_LIFETIME = 31 * 24 * 60 * 60 * 1000;
-
 const router = Router();
 
 const error = require("./scripts/error");
@@ -47,7 +45,6 @@ router.post("/", async (req, res) => {
 	}
 
 	const session = await registerSession(data.email, 30 * 24 * 60 * 60 * 1000);
-	console.log(session);
 
 	if (session === false) {
 		error("Wystąpił błąd serwera.", res, 500);
@@ -57,11 +54,9 @@ router.post("/", async (req, res) => {
 	let expirationDate = new Date();
 	expirationDate.setMonth(expirationDate.getMonth() + 1);
 
-	console.log(expirationDate);
-
 	res
 		.status(200)
-		.cookie("session", session, {
+		.cookie("session", `${session._id}`, {
 			httpOnly: true,
 			expires: expirationDate,
 		})

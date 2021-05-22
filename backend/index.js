@@ -5,10 +5,17 @@ const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 dotenv.config();
 
+// Importy endpointów
+
+// POST
 const register = require("./endpoints/register");
 const login = require("./endpoints/login");
+const logout = require("./endpoints/logout");
 const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
+
+// GET
+
 const getName = require("./endpoints/getName");
 const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
 const resetPassword = require("./endpoints/resetPassword");
@@ -19,7 +26,11 @@ const search = require("./endpoints/search");
 
 const loginCheck = require("./middleware/loginCheck");
 
-const UNVERIFIED_USER_LIFETIME = 24 * 60 * 60 * 1000;
+// Importy rutyn
+const deleteOldUsers = require("./routines/deleteOldUsers");
+const deleteOldSessions = require("./routines/deleteOldSessions");
+
+const DELETE_OLD_RECORDS_INTERVAL = 24 * 60 * 60 * 1000;
 
 const app = express();
 
@@ -37,20 +48,24 @@ mongoose.connect(
 
 const db = mongoose.connection;
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(
 	cors({
-		origin: "http://127.0.0.1:5500",
+		origin: true,
 		credentials: true,
 	})
 );
-app.use(cookieParser());
 
 // Endpointy
+
+// POST
 app.use("/register", register);
 app.use("/login", login);
+app.use("/logout", loginCheck, logout);
 app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
+
 app.use("/getname", getName);
 
 // GET
@@ -58,16 +73,16 @@ app.use("/getname", loginCheck, getName);
 app.use("/search", search)
 
 const Reader = require("./database/models/reader");
+app.use("/sendpasswordchange", sendPasswordChange);
+app.use("/resetpassword", resetPassword);
+app.use("/checkchangepasswordcode", checkChangePasswordCode);
 
-// Usuwanie niezweryfikowanych kont
-setInterval(async () => {
-	const time = new Date(Date.now() - UNVERIFIED_USER_LIFETIME);
+// GET
+app.use("/getname", loginCheck, getName);
 
-	await Reader.deleteMany({
-		verified: false,
-		account_creation_date: { $lt: time },
-	}).exec();
-}, UNVERIFIED_USER_LIFETIME);
+// Routines
+setInterval(deleteOldUsers, DELETE_OLD_RECORDS_INTERVAL);
+setInterval(deleteOldSessions, DELETE_OLD_RECORDS_INTERVAL);
 
 db.on("error", () => {
 	console.log("ojoj");
