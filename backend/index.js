@@ -10,6 +10,14 @@ const login = require("./endpoints/login");
 const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
 const getName = require("./endpoints/getName");
+const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
+const resetPassword = require("./endpoints/resetPassword");
+const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
+const search = require("./endpoints/search");
+
+// Middleware
+
+const loginCheck = require("./middleware/loginCheck");
 
 const UNVERIFIED_USER_LIFETIME = 24 * 60 * 60 * 1000;
 
@@ -44,6 +52,10 @@ app.use("/login", login);
 app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
 app.use("/getname", getName);
+
+// GET
+app.use("/getname", loginCheck, getName);
+app.use("/search", search)
 
 const Reader = require("./database/models/reader");
 
