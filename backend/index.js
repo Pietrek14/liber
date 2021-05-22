@@ -13,6 +13,9 @@ const login = require("./endpoints/login");
 const logout = require("./endpoints/logout");
 const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
+const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
+const resetPassword = require("./endpoints/resetPassword");
+const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 
 // GET
 
@@ -62,6 +65,9 @@ app.use("/login", login);
 app.use("/logout", loginCheck, logout);
 app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
+app.use("/sendpasswordchange", sendPasswordChange);
+app.use("/resetpassword", resetPassword);
+app.use("/checkchangepasswordcode", checkChangePasswordCode);
 
 // GET
 app.use("/getname", loginCheck, getName);
