@@ -19,6 +19,9 @@ router.get("/:id", async (req, res) => {
 		return;
 	}
 
+	// Tutaj w przyszłości dać requesta do backendu pythonowego, który będzie zwracał średnią ocen danej książki przez wszystkich użytkowników
+	book.rating = 5.0;
+
 	res.json(book);
 });
 

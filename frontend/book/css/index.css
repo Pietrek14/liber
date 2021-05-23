@@ -25,12 +25,12 @@ nav {
 
 .cool-button {
   border: 0;
-  width: 100%;
-  height: 35px;
-  background-color: #e3e3e3;
+  padding: 10px;
+  font-size: 20px;
+  background-color: #8845f5;
   -webkit-transition: 1s;
   transition: 1s;
-  color: #707070;
+  color: #e3e3e3;
 }
 
 .cool-button:hover {
@@ -94,6 +94,55 @@ nav {
 
 .side-bar-close:hover {
   cursor: pointer;
+}
+
+.content {
+  padding: 30px 100px;
+}
+
+.content > a {
+  text-decoration: none;
+  color: #707070;
+  font-size: 35px;
+}
+
+.fa {
+  font-size: 25px;
+}
+
+.fa:hover {
+  cursor: pointer;
+}
+
+.checked {
+  color: orange;
+}
+
+article {
+  gap: 90px;
+}
+
+div > h1,
+p {
+  color: #707070;
+}
+
+div > h1 {
+  font-size: 40px;
+  font-weight: 350;
+}
+
+p {
+  font-size: 21px;
+}
+
+.description {
+  width: 50ch;
+  text-align: justify;
+}
+
+.underline {
+  border-bottom: solid 1px #707070;
 }
 
 .alert-box {

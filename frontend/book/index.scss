@@ -1,4 +1,4 @@
-@import "./vars";
+@import "../vars";
 
 .search-bar {
 	width: 500px;
@@ -25,11 +25,11 @@ nav {
 
 .cool-button {
 	border: 0;
-	width: 100%;
-	height: 35px;
-	background-color: $color-3;
+	padding: 10px;
+	font-size: 20px;
+	background-color: $color-1;
 	transition: 1s;
-	color: $color-2;
+	color: $color-3;
 }
 
 .cool-button:hover {
@@ -90,6 +90,55 @@ nav {
 
 .side-bar-close:hover {
 	cursor: pointer;
+}
+
+.content {
+	padding: 30px 100px;
+}
+
+.content > a {
+	text-decoration: none;
+	color: $color-2;
+	font-size: 35px;
+}
+
+.fa {
+	font-size: 25px;
+}
+
+.fa:hover {
+	cursor: pointer;
+}
+
+.checked {
+	color: orange;
+}
+
+article {
+	gap: 90px;
+}
+
+div > h1,
+p {
+	color: $color-2;
+}
+
+div > h1 {
+	font-size: 40px;
+	font-weight: 350;
+}
+
+p {
+	font-size: 21px;
+}
+
+.description {
+	width: 50ch;
+	text-align: justify;
+}
+
+.underline {
+	border-bottom: solid 1px $color-2;
 }
 
 .alert-box {
