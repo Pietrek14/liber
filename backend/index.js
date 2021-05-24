@@ -59,6 +59,7 @@ app.use("/register", register);
 app.use("/login", login);
 app.use("/verifyemail", verifyEmail);
 app.use("/resendcode", resendCode);
+app.use("/confimation", confirmation);
 
 // GET
 app.use("/getname", loginCheck, getName);
