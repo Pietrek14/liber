@@ -101,7 +101,6 @@ router.post("/", async (req, res) => {
 		return;
 	}
 	
-	console.log(email_content);
 
 	res.status(200).json({ message: "Wysłano email" });
 });
