@@ -65,6 +65,7 @@ async function registerPasswordChange(email, code) {
 		console.log(`Zarejestrowano sesję zmiany hasla: ${email}`);
 	});
 	return passwordChange;
+
 }
 
 module.exports = { registerReader, registerSession, registerPasswordChange };
