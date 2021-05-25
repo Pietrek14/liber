@@ -1,6 +1,7 @@
 import { serverAddress } from "../scripts/constants.js";
 
-const submitemail = document.getElementById("email");
+const submitname = document.getElementById("name");
+const submitpass = document.getElementById("password");
 const submitButton = document.getElementById("submit-button");
 
 const alertBox = document.getElementById("alert-box");
@@ -33,20 +34,27 @@ function validateIfNotEmpty(value, errorMessage) {
 submitButton.onclick = async (e) => {
 	e.preventDefault();
 
-	const email = submitemail.value;
-
+	const name = submitname.value;
+	const pass = submitpass.value;
+	
 	// Sprawdz, czy wszystkie pola zostały wypełnione
-	if (!validateIfNotEmpty(email, "Nie wpisano emailu.")) return;
+	if (!validateIfNotEmpty(pass, "Nie wpisano hasła.")) return;
+	if (!validateIfNotEmpty(name, "Nie wpisano nazwy.")) return;
 
-	const res = await fetch(`${serverAddress}/sendpasswordchange`, {
+	const res = await fetch(`${serverAddress}/changeuserdata`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			email: email,
+			password: pass,
+			name: name,
 		}),
 	});
+
+
+	// do zmiany bo nie ma tej strony jeszcze
+
 	const data = await res.json();
 
 	if (!res.ok) {
@@ -54,9 +62,10 @@ submitButton.onclick = async (e) => {
 		return;
 	}
 
+
 	if (res.status === 400) {
 		alert(data.message);
 	} else if (res.status === 200) {
-		window.location.replace("./emailsend.html");
+		window.location.replace("../index.html");
 	}
 };

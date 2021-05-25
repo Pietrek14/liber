@@ -68,7 +68,7 @@ app.use("/resendcode", resendCode);
 app.use("/sendpasswordchange", sendPasswordChange);
 app.use("/resetpassword", resetPassword);
 app.use("/checkchangepasswordcode", checkChangePasswordCode);
-app.use("/changeUserData", loginCheck, changeUserData);
+app.use("/changeuserdata", loginCheck, changeUserData);
 
 // GET
 app.use("/getname", loginCheck, getName);

@@ -20,6 +20,7 @@ const init = async () => {
 
 	if (res.status === 401) {
 		window.location = "./login/";
+		console.log("penis");
 	}
 
 	const name = data.name;
