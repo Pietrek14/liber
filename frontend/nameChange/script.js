@@ -8,6 +8,22 @@ const alertBox = document.getElementById("alert-box");
 const alertBoxContent = document.getElementById("alert-box-content");
 const alertBoxClose = document.getElementById("alert-box-close");
 
+async function init() {
+	const res = await fetch(`${serverAddress}/getname`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	if(res.status === 401) {
+		window.location.replace("../index.html");
+		return;
+	}
+}
+
+await init();		
+
 function alert(message) {
 	alertBoxContent.innerText = message;
 	alertBox.classList.add("active");
