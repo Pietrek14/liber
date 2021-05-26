@@ -26,21 +26,21 @@ router.post("/", async (req, res) => {
 
     //funkcja na insert id ksionżki i daty
 
-    var ObjectID = require('mongodb').ObjectID;
-
     var bookToBorrow = {
         boorow_date : today,
         book : bookFromDB.id,
-        _id : new ObjectID(),
     };
 
-    var borrowID = bookToBorrow._id;
+    db.collection(borrowSchema).insert(bookToBorrow);
 
-    db.collection('reader').insert(bookToBorrow);
+    borrowSchema.find(bookToBorrow).lean().exec(function(error, records) {
+        records.forEach(function(record) {
+            var borrowID = record._id;
+        });
+      });
 
     //funkcja na dodanie id wypozyczenia do tablicy usera
 
-    const borrows = user.borrows; 
-
-    db.collection(borrows).insert(borrowID);
+    user.borrows.push(borrowID);
+    user.save(done);
 })          
