@@ -1,4 +1,5 @@
 @import "./vars";
+@import "./sideBar";
 
 .search-bar {
 	width: 500px;
@@ -39,57 +40,6 @@ nav {
 .search-bar {
 	border: 1px solid $color-2;
 	font-size: 21px;
-}
-
-.borgar-menu {
-	width: 58px;
-	gap: 8px;
-	transition: 1s;
-}
-
-.borgar-menu.active {
-	transform: rotate(90deg);
-}
-
-.borgar-menu:hover {
-	cursor: pointer;
-}
-
-.borgar-menu > div {
-	width: 100%;
-	padding: 4.5px;
-	background-color: $color-4;
-}
-
-.not-logged-in {
-	margin-top: 150px;
-}
-
-.side-bar {
-	position: fixed;
-	right: -100%;
-	top: 0;
-	padding: 100px 50px;
-	width: 500px;
-	height: 100vh;
-	transition: 1s;
-	background-color: $color-1;
-}
-
-.side-bar.active {
-	right: 0;
-}
-
-.side-bar-close {
-	position: absolute;
-	left: 15px;
-	top: 15px;
-	color: $color-3;
-	font-size: 25px;
-}
-
-.side-bar-close:hover {
-	cursor: pointer;
 }
 
 .alert-box {

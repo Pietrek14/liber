@@ -72,12 +72,11 @@ nav {
   position: fixed;
   right: -100%;
   top: 0;
-  padding: 100px 50px;
+  padding: 100px 50px 15px 50px;
   width: 500px;
-  height: 100vh;
   -webkit-transition: 1s;
   transition: 1s;
-  background-color: #8845f5;
+  background-color: #9757ff;
 }
 
 .side-bar.active {
