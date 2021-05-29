@@ -1,4 +1,5 @@
 import { serverAddress } from "../scripts/constants.js";
+import { alert } from "../scripts/alert.js";
 
 const title = document.getElementById("title");
 const author = document.getElementById("author");
