@@ -19,8 +19,7 @@ const init = async () => {
 	const data = await res.json();
 
 	if (res.status === 401) {
-		window.location = "./login/";
-		console.log("penis");
+		window.location.replace("./login/");
 	}
 
 	const name = data.name;
