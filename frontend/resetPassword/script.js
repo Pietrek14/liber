@@ -1,13 +1,10 @@
 // pietreks shit
 import { serverAddress } from "../scripts/constants.js";
+import { alert } from "../scripts/alert.js";
 
 const submitPass1 = document.getElementById("password1");
 const submitPass2 = document.getElementById("password2");
 const submitButton = document.getElementById("submit-button");
-
-const alertBox = document.getElementById("alert-box");
-const alertBoxContent = document.getElementById("alert-box-content");
-const alertBoxClose = document.getElementById("alert-box-close");
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -15,40 +12,27 @@ const code = urlParams.get("code");
 
 // endpoint ktory sprawdza czy kod istnieje w bazie danych
 const init = async () => {
-	const checkCodeRequest = await fetch(`${serverAddress}/checkChangePasswordCode`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			code: code,
-		}),
-	});
-	
+	const checkCodeRequest = await fetch(
+		`${serverAddress}/checkChangePasswordCode`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				code: code,
+			}),
+		}
+	);
+
 	const body = await checkCodeRequest.json();
-	
+
 	if (body.message === "nie pog") {
 		window.location.replace("./nogoodcode.html");
 	}
-}; 
+};
 
 init();
-
-// alert box shit here
-function alert(message) {
-	alertBoxContent.innerText = message;
-	alertBox.classList.add("active");
-}
-
-function hideAlertBox() {
-	alertBox.classList.remove("active");
-}
-
-alertBoxClose.onclick = hideAlertBox;
-
-document.addEventListener("keydown", (e) => {
-	hideAlertBox();
-});
 
 // sprawdza czy nie puste lmao
 function validateIfNotEmpty(value, errorMessage) {
@@ -71,10 +55,10 @@ submitButton.onclick = async (e) => {
 
 	// sprawdz czy hasla sa takie same
 	if (pass1 != pass2) {
-		alert("Hasła nie są takie same")
+		alert("Hasła nie są takie same");
 		return;
-	} 
-	
+	}
+
 	// wysylanie na serwer
 	const res = await fetch(`${serverAddress}/resetpassword`, {
 		method: "POST",

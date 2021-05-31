@@ -13,13 +13,14 @@ const login = require("./endpoints/login");
 const logout = require("./endpoints/logout");
 const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
+const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
+const resetPassword = require("./endpoints/resetPassword");
+const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 
 // GET
 
 const getName = require("./endpoints/getName");
-const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
-const resetPassword = require("./endpoints/resetPassword");
-const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
+const getBookInfo = require("./endpoints/getBookInfo");
 
 // Middleware
 
@@ -70,6 +71,7 @@ app.use("/checkchangepasswordcode", checkChangePasswordCode);
 
 // GET
 app.use("/getname", loginCheck, getName);
+app.use("/getbookinfo", getBookInfo);
 
 // Routines
 setInterval(deleteOldUsers, DELETE_OLD_RECORDS_INTERVAL);
