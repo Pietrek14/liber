@@ -1,4 +1,5 @@
 import { serverAddress } from "../scripts/constants.js";
+import { alert } from "../scripts/alert.js";
 
 const submitButton = document.getElementById("submit-button");
 const codeInput = document.getElementById("verification-code");
@@ -15,21 +16,6 @@ const email = urlParams.get("email");
 if (!email) {
 	window.location = "../index.html";
 }
-
-function alert(message) {
-	alertBoxContent.innerText = message;
-	alertBox.classList.add("active");
-}
-
-function hideAlertBox() {
-	alertBox.classList.remove("active");
-}
-
-alertBoxClose.onclick = hideAlertBox;
-
-document.addEventListener("keydown", (e) => {
-	hideAlertBox();
-});
 
 function validateIfNotEmpty(value, errorMessage) {
 	if (value.length === 0) {

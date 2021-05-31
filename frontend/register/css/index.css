@@ -1,4 +1,50 @@
 @use "sass:map";
+.alert-box {
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 50vw;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 500px;
+  height: 250px;
+  padding: 10px;
+  background-color: #8845f5;
+  color: #e3e3e3;
+  font-size: 0;
+  opacity: 0;
+  -webkit-transition: 1500ms;
+  transition: 1500ms;
+}
+
+.alert-box.active {
+  display: block;
+  pointer-events: auto;
+  top: 50vh;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  opacity: 1;
+  font-size: 15px;
+}
+
+.alert-box-content {
+  border: 5px solid #e3e3e3;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  text-align: center;
+}
+
+.alert-box-close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+.alert-box-close:hover {
+  cursor: pointer;
+}
+
 .purple {
   width: 38vw;
   height: 100vh;
@@ -53,48 +99,5 @@ button {
   width: 150px;
   height: 50px;
   font-size: 21px;
-}
-
-.alert-box {
-  position: fixed;
-  top: 0;
-  left: 50vw;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  width: 500px;
-  height: 250px;
-  padding: 10px;
-  background-color: #8845f5;
-  color: #e3e3e3;
-  font-size: 0;
-  opacity: 0;
-  -webkit-transition: 1500ms;
-  transition: 1500ms;
-}
-
-.alert-box.active {
-  top: 50vh;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  opacity: 1;
-  font-size: 15px;
-}
-
-.alert-box-content {
-  border: 5px solid #e3e3e3;
-  width: 100%;
-  height: 100%;
-  padding: 5px;
-  text-align: center;
-}
-
-.alert-box-close {
-  position: absolute;
-  top: 25px;
-  right: 25px;
-}
-
-.alert-box-close:hover {
-  cursor: pointer;
 }
 /*# sourceMappingURL=index.css.map */

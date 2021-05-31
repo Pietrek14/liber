@@ -1,28 +1,10 @@
 import { serverAddress } from "../scripts/constants.js";
+import { alert } from "../scripts/alert.js";
 
 const submitButton = document.getElementById("submit-button");
 const nameInput = document.getElementById("name-input");
 const emailInput = document.getElementById("email-input");
 const passwordInput = document.getElementById("password-input");
-
-const alertBox = document.getElementById("alert-box");
-const alertBoxContent = document.getElementById("alert-box-content");
-const alertBoxClose = document.getElementById("alert-box-close");
-
-function alert(message) {
-	alertBoxContent.innerText = message;
-	alertBox.classList.add("active");
-}
-
-function hideAlertBox() {
-	alertBox.classList.remove("active");
-}
-
-alertBoxClose.onclick = hideAlertBox;
-
-document.addEventListener("keydown", (e) => {
-	hideAlertBox();
-});
 
 function validateIfNotEmpty(value, errorMessage) {
 	if (value.length === 0) {
@@ -39,7 +21,8 @@ function validateRegex(value, regex, errorMessage) {
 }
 
 function validateEmail(email, errorMessage) {
-	const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+	const re =
+		/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 	return validateRegex(String(email).toLowerCase(), re, errorMessage);
 }
 
