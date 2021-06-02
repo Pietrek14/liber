@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Liber</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<link rel="stylesheet" href="css/index.css" />
+		<script defer type="module" src="script.js"></script>
+	</head>
+	<body>
+		<header
+			class="
+				d-flex
+				flex-column flex-md-row
+				justify-content-around
+				align-items-center
+			"
+		>
+			<h1>Autor</h1>
+			<div id="borgar-menu" class="d-flex flex-column borgar-menu">
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</header>
+
+		<main id="content" class="content">
+			<a href="../index.html">< Wróć na stronę główną</a>
+			<article class="d-flex mt-5">
+				<div class="d-flex flex-column gap-2">
+					<div class="d-flex gap-4"></div>
+				</div>
+				<div class="d-flex flex-column gap-2 align-items-start">
+					<h1 id="author" class="author underline">Melon Sus</h1>
+					<div class="p-3">
+						<h3 class="underline d-inline-block mb-3">Twórczość:</h3>
+						<div id="book-list" class="book-list p-2"></div>
+					</div>
+				</div>
+			</article>
+		</main>
+
+		<aside
+			id="side-bar"
+			class="side-bar d-flex flex-column gap-3 align-items-center"
+		>
+			<div id="side-bar-close" class="side-bar-close">></div>
+			<span id="name" class="side-bar-name"></span>
+			<button id="my-books-button">Moje książki</button>
+			<button id="account-button">Konto</button>
+			<button id="logout-button" class="logout-button">
+				<img src="../img/logout.png" class="logout-img" width="40" />
+				Wyloguj
+			</button>
+		</aside>
+
+		<aside
+			id="alert-box"
+			class="alert-box d-flex align-items-center justify-content-center"
+		>
+			<div
+				id="alert-box-content"
+				class="
+					alert-box-content
+					d-flex
+					align-items-center
+					justify-content-center
+				"
+			>
+				a
+			</div>
+			<div id="alert-box-close" class="alert-box-close">X</div>
+		</aside>
+	</body>
+</html>
