@@ -1,5 +1,6 @@
 const Reader = require("../models/reader");
 const Session = require("../models/session");
+const Book = require("../models/book");
 const PasswordChange = require("../models/passwordChanges");
 const hash = require("../../hash");
 
@@ -49,23 +50,56 @@ async function registerSession(email, lifetime) {
 	return session;
 }
 
+async function registerBook(
+	title,
+	author,
+	description,
+	releaseDate,
+	publisher,
+	coverUrl,
+	tags,
+	content = null
+) {
+	const book = new Book({
+		title: title,
+		author: author,
+		description: description,
+		releaseDate: releaseDate,
+		publisher: publisher,
+		coverUrl: coverUrl,
+		tags: tags,
+		content: content,
+	});
+
+	book.save((err, book) => {
+		if (err) {
+			console.error(err);
+			return;
+		}
+
+		console.log(`Dodano książkę: ${title}`);
+	});
+
+	return book;
+}
+
 async function registerPasswordChange(email, code) {
 	const passwordChange = new PasswordChange({
 		email: email,
 		code: code,
 		lifetime: 43200000, // 12h in ms
 	});
-
+	
 	passwordChange.save((err, passwordChange) => {
 		if (err) {
 			console.error(err);
 			return false;
 		}
-
+		
 		console.log(`Zarejestrowano sesję zmiany hasla: ${email}`);
 	});
 	return passwordChange;
 
 }
 
-module.exports = { registerReader, registerSession, registerPasswordChange };
+module.exports = { registerReader, registerSession, registerBook, registerPasswordChange };

@@ -5,9 +5,9 @@ const bookSchema = new Schema({
 	title: String,
 	author: String,
 	description: String,
-	release_date: Date,
+	releaseDate: Date,
 	publisher: String,
-	cover: String, // URL do okładki
+	coverUrl: String, // URL do okładki
 	tags: [String],
 	content: String, // URL do pdf'a (jeśli istnieje)
 });

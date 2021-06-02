@@ -1,26 +1,8 @@
 import { serverAddress } from "../scripts/constants.js";
+import { alert } from "../scripts/alert.js";
 
 const submitemail = document.getElementById("email");
 const submitButton = document.getElementById("submit-button");
-
-const alertBox = document.getElementById("alert-box");
-const alertBoxContent = document.getElementById("alert-box-content");
-const alertBoxClose = document.getElementById("alert-box-close");
-
-function alert(message) {
-	alertBoxContent.innerText = message;
-	alertBox.classList.add("active");
-}
-
-function hideAlertBox() {
-	alertBox.classList.remove("active");
-}
-
-alertBoxClose.onclick = hideAlertBox;
-
-document.addEventListener("keydown", (e) => {
-	hideAlertBox();
-});
 
 function validateIfNotEmpty(value, errorMessage) {
 	if (value.length === 0) {
