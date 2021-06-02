@@ -21,6 +21,7 @@ const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 
 const getName = require("./endpoints/getName");
 const getBookInfo = require("./endpoints/getBookInfo");
+const getAuthorBooks = require("./endpoints/getAuthorBooks");
 
 // Middleware
 
@@ -72,6 +73,7 @@ app.use("/checkchangepasswordcode", checkChangePasswordCode);
 // GET
 app.use("/getname", loginCheck, getName);
 app.use("/getbookinfo", getBookInfo);
+app.use("/getauthorbooks", getAuthorBooks);
 
 // Routines
 setInterval(deleteOldUsers, DELETE_OLD_RECORDS_INTERVAL);
