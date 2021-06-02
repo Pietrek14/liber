@@ -18,6 +18,7 @@ const changeUserData = require("./endpoints/changeUserData");
 // GET
 
 const getName = require("./endpoints/getName");
+const getEmail = require("./endpoints/getEmail");
 const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
 const resetPassword = require("./endpoints/resetPassword");
 const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
@@ -72,6 +73,7 @@ app.use("/changeuserdata", loginCheck, changeUserData);
 
 // GET
 app.use("/getname", loginCheck, getName);
+app.use("/getemail", loginCheck, getEmail);
 
 // Routines
 setInterval(deleteOldUsers, DELETE_OLD_RECORDS_INTERVAL);
