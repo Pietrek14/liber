@@ -27,4 +27,4 @@ init();
 
 import setUpSideBar from "./scripts/sideBar.js";
 
-setUpSideBar("./login/");
+setUpSideBar("./login/", "./user/");

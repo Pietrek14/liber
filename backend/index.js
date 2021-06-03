@@ -15,14 +15,11 @@ const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
 const changeUserData = require("./endpoints/changeUserData");
 const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
-const resetPassword = require("./endpoints/resetPassword");
-const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 
 // GET
 
 const getName = require("./endpoints/getName");
 const getEmail = require("./endpoints/getEmail");
-const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
 const resetPassword = require("./endpoints/resetPassword");
 const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 const getBookInfo = require("./endpoints/getBookInfo");
