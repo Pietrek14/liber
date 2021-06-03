@@ -19,7 +19,6 @@ const {
 	validateMaxLength,
 	validateMinLength,
 	validateRegex,
-	validateEmail,
 } = require("./scripts/validation");
 const { getUserByEmail } = require("./scripts/getUser");
 const hash = require("../hash")

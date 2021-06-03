@@ -11,18 +11,21 @@ const alertBoxClose = document.getElementById("alert-box-close");
 async function init() {
 	const res = await fetch(`${serverAddress}/getname`, {
 		method: "GET",
+		credentials: "include",
 		headers: {
 			"Content-Type": "application/json",
 		},
 	});
 
+	console.log(res.status);
+
 	if(res.status === 401) {
-		window.location.replace("../index.html");
+		window.location.replace("../login/index.html");
 		return;
 	}
 }
 
-await init();		
+init();		
 
 function alert(message) {
 	alertBoxContent.innerText = message;
@@ -59,6 +62,7 @@ submitButton.onclick = async (e) => {
 
 	const res = await fetch(`${serverAddress}/changeuserdata`, {
 		method: "POST",
+		credentials: "include",
 		headers: {
 			"Content-Type": "application/json",
 		},

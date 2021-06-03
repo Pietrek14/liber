@@ -15,17 +15,12 @@ dotenv.config({ path: "../.env" });
 const {
 	validateIfUndefined,
 	validateIfNotEmpty,
-	validateMaxLength,
-	validateMinLength,
-	validateRegex,
-	validateEmail,
 } = require("./scripts/validation");
 
 const generateCode = require("./scripts/generateCode");
 
 const sendMail = require("./scripts/sendMail");
 const error = require("./scripts/error");
-const { ConnectionBase } = require("mongoose");
 
 const router = Router();
 
