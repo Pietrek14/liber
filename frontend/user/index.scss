@@ -50,14 +50,17 @@ input {
 	background-color: $color-4;
 }
 
-.search-bar {
-	border: 1px solid $color-2;
-	font-size: 21px;
-	width: 500px;
-}
-
 @media (max-width: map-get($bootstrap, "lg")) {
 	.search-bar {
 		width: 300px;
 	}
+}
+
+button {
+	background-color: $color-1;
+	border: 1px solid $color-2;
+	color: $color-3;
+	width: 150px;
+	height: 50px;
+	font-size: 21px;
 }

@@ -53,18 +53,9 @@ const init = async () => {
 init();
 
 // side menu stuff 
-function openSideBar() {
-	borgarMenu.classList.add("active");
-	sideBar.classList.add("active");
-}
+import setUpSideBar from "../scripts/sideBar.js";
+setUpSideBar("../login/");
 
-function closeSideBar() {
-	borgarMenu.classList.remove("active");
-	sideBar.classList.remove("active");
-}
-
-borgarMenu.onclick = openSideBar;
-sideBarClose.onclick = closeSideBar;
 
 
 // przyciski shite hee`
