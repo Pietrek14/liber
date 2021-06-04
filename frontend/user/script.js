@@ -60,25 +60,6 @@ setUpSideBar("../login/");
 
 // przyciski shite hee`
 
-// logout
-logoutButton.onclick = async () => {
-	const res = await fetch(`${serverAddress}/logout`, {
-		method: "POST",
-		credentials: "include",
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-
-	if (res.status === 200) {
-		window.location = "../login/";
-		return;
-	}
-
-	const data = await res.json();
-
-	alert(data.message);
-};
 
 logoutButton2.onclick = async () => {
 	const res = await fetch(`${serverAddress}/logout`, {

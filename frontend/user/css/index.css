@@ -135,10 +135,30 @@ header {
   background-color: #8845f5;
 }
 
+.content {
+  padding: 50px 160px;
+}
+
+hr {
+  width: 90%;
+}
+
+.napisy {
+  padding: 0px 100px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 75px;
+}
+
+.fajne-napisy {
+  color: #707070;
+  font-size: 25px;
+}
+
 h1 {
-  color: #e3e3e3;
+  color: #707070;
   font-weight: normal;
-  font-size: 65px;
+  font-size: 115px;
 }
 
 nav {
@@ -175,15 +195,18 @@ input {
   background-color: #b78ff7;
 }
 
-.search-bar {
-  border: 1px solid #707070;
-  font-size: 21px;
-  width: 500px;
-}
-
 @media (max-width: 992px) {
   .search-bar {
     width: 300px;
   }
+}
+
+.nice-button {
+  background-color: #8845f5;
+  border: 1px solid #707070;
+  color: #e3e3e3;
+  width: 150px;
+  height: 50px;
+  font-size: 21px;
 }
 /*# sourceMappingURL=index.css.map */

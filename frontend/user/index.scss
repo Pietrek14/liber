@@ -10,10 +10,30 @@ header {
 	background-color: $color-1;
 }
 
+.content {
+	padding: 50px 160px;
+}
+
+hr {
+	width: 90%;
+}
+
+.napisy {
+	padding: 0px 100px;
+	display: grid;
+	grid-template-columns: auto auto;
+	gap: 75px;
+}
+
+.fajne-napisy {
+	color: $color-2;
+	font-size: 25px;
+}
+
 h1 {
-	color: $color-3;
+	color: $color-2;
 	font-weight: normal;
-	font-size: 65px;
+	font-size: 115px;
 }
 
 nav {
@@ -56,7 +76,7 @@ input {
 	}
 }
 
-button {
+.nice-button {
 	background-color: $color-1;
 	border: 1px solid $color-2;
 	color: $color-3;
