@@ -7,4 +7,8 @@ async function getBookInfo(sessionId) {
 	return Book.findById(sessionId).lean();
 }
 
-module.exports = { getBookInfo };
+async function getAuthorBooks(name) {
+	return Book.find({ author: name });
+}
+
+module.exports = { getBookInfo, getAuthorBooks };
