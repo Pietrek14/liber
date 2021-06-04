@@ -1,4 +1,5 @@
 const { getUserBySession } = require("../endpoints/scripts/getUser");
+const { deleteSession } = require("../database/scripts/delete");
 const error = require("../endpoints/scripts/error");
 
 module.exports = async (req, res, next) => {
@@ -20,6 +21,19 @@ module.exports = async (req, res, next) => {
 	// Jeśli podano niepoprawne ID sesji
 	if (!user) {
 		error("Niepoprawna sesja", res, 401);
+		return;
+	}
+
+	// Jeśli użytkownik nie jest zwhitelistowany
+	if (!user.whitelisted) {
+		error("Konto nie zostało zweryfikowane przez bibliotekarza.", res, 401);
+
+		// Usuń cookie sesji z klienta
+		res.clearCookie("session");
+
+		// Usuń sesję z bazy danych
+		deleteSession(req.session);
+
 		return;
 	}
 

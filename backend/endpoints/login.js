@@ -44,6 +44,21 @@ router.post("/", async (req, res) => {
 		return;
 	}
 
+	// Głupie rozwiązanie dla debili (ma go przenosić na stronę z weryfikacją maila)
+
+	if (!user.verified) {
+		error("Nie zweryfikowano emaila.", res);
+		return;
+	}
+
+	if (!user.whitelisted) {
+		error(
+			"Konto nie zostało zweryfikowane przez bibliotekarza. Zgłoś się do swojej lokalnej biblioteki i poproś o zweryfikowanie.",
+			res
+		);
+		return;
+	}
+
 	const session = await registerSession(data.email, 30 * 24 * 60 * 60 * 1000);
 
 	if (session === false) {

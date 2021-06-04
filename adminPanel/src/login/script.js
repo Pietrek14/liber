@@ -1,25 +1,20 @@
-global.mongoose = require("mongoose");
+const { ipcRenderer } = require("electron");
 const { alert } = require("../scripts/alert");
 
 const loginInput = document.getElementById("login-input");
 const passwordInput = document.getElementById("password-input");
 const submitButton = document.getElementById("submit-button");
 
+ipcRenderer.on("connection-error", (e, err) => {
+	alert(`Nie udało się zalogować.<br>Błąd: ${err}`);
+});
+
+ipcRenderer.on("connection-successful", (e, arg) => {
+	window.location = "../index.html";
+});
+
 submitButton.onclick = (e) => {
 	e.preventDefault();
 
-	global.mongoose.connect(
-		`mongodb+srv://${loginInput.value}:${passwordInput.value}@liber.4efko.mongodb.net/liber?retryWrites=true&w=majority`,
-		{
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		},
-		(err) => {
-			if (err) {
-				alert(`Nie udało się zalogować.<br>Błąd: ${err}`);
-			} else {
-				window.location = "../index.html";
-			}
-		}
-	);
+	ipcRenderer.send("connect-mongoose", loginInput.value, passwordInput.value);
 };
