@@ -1,0 +1,56 @@
+@import "./vars";
+@import "./sideBar";
+@import "./alert";
+
+header {
+	position: sticky;
+	top: 0;
+	width: 100vw;
+	padding: 30px;
+	background-color: $color-1;
+}
+
+h1 {
+	color: $color-3;
+	font-weight: normal;
+	font-size: 65px;
+}
+
+nav {
+	gap: 100px;
+}
+
+@media (max-width: map-get($bootstrap, "md")) {
+	nav {
+		gap: 10px;
+	}
+}
+
+input {
+	clear: both;
+}
+
+.cool-button {
+	border: 0;
+	width: 100%;
+	height: 35px;
+	background-color: $color-3;
+	transition: 1s;
+	color: $color-2;
+}
+
+.cool-button:hover {
+	background-color: $color-4;
+}
+
+.search-bar {
+	border: 1px solid $color-2;
+	font-size: 21px;
+	width: 500px;
+}
+
+@media (max-width: map-get($bootstrap, "lg")) {
+	.search-bar {
+		width: 300px;
+	}
+}
