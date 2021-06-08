@@ -10,6 +10,7 @@ const bookSchema = new Schema({
 	coverUrl: String, // URL do okładki
 	tags: [String],
 	content: String, // URL do pdf'a (jeśli istnieje)
+	available: { type: Boolean, default: true },
 });
 
 const Book = mongoose.model("Book", bookSchema);

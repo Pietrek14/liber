@@ -1,5 +1,4 @@
 @import "./vars";
-@import "./sideBar";
 @import "./alert";
 
 header {
@@ -11,46 +10,21 @@ header {
 }
 
 h1 {
-	color: $color-3;
 	font-weight: normal;
 	font-size: 65px;
 }
 
-nav {
-	gap: 100px;
+a,
+a:hover {
+	color: $color-3;
+	text-decoration: none;
 }
 
-@media (max-width: map-get($bootstrap, "md")) {
-	nav {
-		gap: 10px;
-	}
+main > a {
+	background-color: $color-1;
+	padding: 15px;
 }
 
-input {
-	clear: both;
-}
-
-.cool-button {
-	border: 0;
-	width: 100%;
-	height: 35px;
-	background-color: $color-3;
-	transition: 1s;
-	color: $color-2;
-}
-
-.cool-button:hover {
-	background-color: $color-4;
-}
-
-.search-bar {
-	border: 1px solid $color-2;
-	font-size: 21px;
-	width: 500px;
-}
-
-@media (max-width: map-get($bootstrap, "lg")) {
-	.search-bar {
-		width: 300px;
-	}
+main > a:hover {
+	background-color: mix($color-1, rgb(0, 0, 0));
 }

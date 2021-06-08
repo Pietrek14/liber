@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, ipcRenderer } = require("electron");
 const path = require("path");
 const mongoose = require("mongoose");
 const Reader = require("./models/reader");
+const { registerBook } = require("./scripts/register");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -137,4 +138,29 @@ ipcMain.on("get-whitelisted-users", async (event, args) => {
 	const whitelistedUsers = await query.exec();
 
 	event.returnValue = whitelistedUsers;
+});
+
+/**
+ * @param args Title, author, description, release date, publisher, cover URL, tags, content URL
+ * @returns "book-register-successful" event (arg - book) if success; "book-register-failure" if failure
+ */
+ipcMain.on("register-book", async (event, args) => {
+	console.log(args);
+	console.log(...args);
+
+	const book = await registerBook(
+		args[0],
+		args[1],
+		args[2],
+		args[3],
+		args[4],
+		args[5],
+		args[6],
+		args[7]
+	).catch((err) => {
+		console.error(err);
+	});
+
+	if (book) event.reply("book-register-successful", book.title);
+	else event.reply("book-register-failure", "");
 });
