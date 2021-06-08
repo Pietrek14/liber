@@ -16,6 +16,7 @@ const resendCode = require("./endpoints/resendCode");
 const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
 const resetPassword = require("./endpoints/resetPassword");
 const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
+const addRate = require("./endpoints/addRate");
 
 // GET
 
@@ -35,15 +36,15 @@ const DELETE_OLD_RECORDS_INTERVAL = 24 * 60 * 60 * 1000;
 const app = express();
 
 mongoose.connect(
-	`mongodb+srv://admin:${process.env.DATABASE_PASSWORD}@liber.4efko.mongodb.net/liber?retryWrites=true&w=majority`,
-	{
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	},
-	(err) => {
-		if (err) console.error(err);
-		else console.log("pog");
-	}
+  `mongodb+srv://admin:${process.env.DATABASE_PASSWORD}@liber.4efko.mongodb.net/liber?retryWrites=true&w=majority`,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err) => {
+    if (err) console.error(err);
+    else console.log("pog");
+  }
 );
 
 const db = mongoose.connection;
@@ -51,10 +52,10 @@ const db = mongoose.connection;
 app.use(cookieParser());
 app.use(express.json());
 app.use(
-	cors({
-		origin: true,
-		credentials: true,
-	})
+  cors({
+    origin: true,
+    credentials: true,
+  })
 );
 
 // Endpointy
@@ -68,6 +69,7 @@ app.use("/resendcode", resendCode);
 app.use("/sendpasswordchange", sendPasswordChange);
 app.use("/resetpassword", resetPassword);
 app.use("/checkchangepasswordcode", checkChangePasswordCode);
+app.use("/addrate", loginCheck, addRate);
 
 // GET
 app.use("/getname", loginCheck, getName);
@@ -78,9 +80,9 @@ setInterval(deleteOldUsers, DELETE_OLD_RECORDS_INTERVAL);
 setInterval(deleteOldSessions, DELETE_OLD_RECORDS_INTERVAL);
 
 db.on("error", () => {
-	console.log("ojoj");
+  console.log("ojoj");
 });
 
 db.once("open", () => {
-	app.listen(3000);
+  app.listen(3000);
 });
