@@ -29,11 +29,12 @@ submitButton.onclick = async (e) => {
 			email: email,
 		}),
 	});
+	const data = await res.json();
 
 	if (!res.ok) {
-		console.log("nie bylo ok", res);
+		alert(data.message);
+		return;
 	}
-	const data = await res.json();
 
 	if (res.status === 400) {
 		alert(data.message);

@@ -6,6 +6,7 @@ const sideBarClose = document.getElementById("side-bar-close");
 
 const nameField = document.getElementById("name");
 const logoutButton = document.getElementById("logout-button");
+const accountButton = document.getElementById("account-button");
 
 function openSideBar() {
 	borgarMenu.classList.add("active");
@@ -17,7 +18,7 @@ function closeSideBar() {
 	sideBar.classList.remove("active");
 }
 
-export default async function setUpSideBar(loginFileLocation = "../login/") {
+export default async function setUpSideBar(loginFileLocation = "../login/", accountFileLocation = "../user/") {
 	borgarMenu.onclick = openSideBar;
 	sideBarClose.onclick = closeSideBar;
 
@@ -38,6 +39,10 @@ export default async function setUpSideBar(loginFileLocation = "../login/") {
 		const data = await res.json();
 
 		alert(data.message);
+	};
+
+	accountButton.onclick = async () => {
+		window.location.replace(accountFileLocation);
 	};
 
 	const res = await fetch(`${serverAddress}/getname`, {

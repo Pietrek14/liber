@@ -13,6 +13,7 @@ const login = require("./endpoints/login");
 const logout = require("./endpoints/logout");
 const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
+const changeUserData = require("./endpoints/changeUserData");
 const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
 const resetPassword = require("./endpoints/resetPassword");
 const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
@@ -21,7 +22,11 @@ const addRate = require("./endpoints/addRate");
 // GET
 
 const getName = require("./endpoints/getName");
+const getEmail = require("./endpoints/getEmail");
+const resetPassword = require("./endpoints/resetPassword");
+const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 const getBookInfo = require("./endpoints/getBookInfo");
+const getAuthorBooks = require("./endpoints/getAuthorBooks");
 
 // Middleware
 
@@ -70,10 +75,13 @@ app.use("/sendpasswordchange", sendPasswordChange);
 app.use("/resetpassword", resetPassword);
 app.use("/checkchangepasswordcode", checkChangePasswordCode);
 app.use("/addrate", loginCheck, addRate);
+app.use("/changeuserdata", loginCheck, changeUserData);
 
 // GET
 app.use("/getname", loginCheck, getName);
+app.use("/getemail", loginCheck, getEmail);
 app.use("/getbookinfo", getBookInfo);
+app.use("/getauthorbooks", getAuthorBooks);
 
 // Routines
 setInterval(deleteOldUsers, DELETE_OLD_RECORDS_INTERVAL);

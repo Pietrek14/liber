@@ -1,3 +1,5 @@
+// Żeby uruchomić stronę trzeba po adresie dodać "?book=" + odpowiednie id książki
+
 import { serverAddress } from "../scripts/constants.js";
 import { alert } from "../scripts/alert.js";
 
