@@ -1,0 +1,30 @@
+@import "./vars";
+@import "./alert";
+
+header {
+	position: sticky;
+	top: 0;
+	width: 100vw;
+	padding: 30px;
+	background-color: $color-1;
+}
+
+h1 {
+	font-weight: normal;
+	font-size: 65px;
+}
+
+a,
+a:hover {
+	color: $color-3;
+	text-decoration: none;
+}
+
+main > a {
+	background-color: $color-1;
+	padding: 15px;
+}
+
+main > a:hover {
+	background-color: mix($color-1, rgb(0, 0, 0));
+}

@@ -1,0 +1,119 @@
+@use "sass:map";
+.alert-box {
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 50vw;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 500px;
+  height: 250px;
+  padding: 10px;
+  background-color: #8845f5;
+  color: #e3e3e3;
+  font-size: 0;
+  opacity: 0;
+  -webkit-transition: 1500ms;
+  transition: 1500ms;
+}
+
+.alert-box.active {
+  display: block;
+  pointer-events: auto;
+  top: 50vh;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  opacity: 1;
+  font-size: 15px;
+}
+
+.alert-box-content {
+  border: 5px solid #e3e3e3;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  text-align: center;
+}
+
+.alert-box-close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+.alert-box-close:hover {
+  cursor: pointer;
+}
+
+header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  padding: 30px;
+  background-color: #8845f5;
+}
+
+h1 {
+  font-weight: normal;
+  font-size: 65px;
+}
+
+a {
+  color: #e3e3e3;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #e3e3e3;
+}
+
+h3 {
+  font-size: 55px;
+  font-weight: normal;
+  color: #707070;
+}
+
+section {
+  gap: 15px;
+}
+
+hr {
+  border: 1px solid #707070;
+  opacity: 0.5;
+}
+
+form {
+  gap: 25px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  padding: 9px 1px;
+  width: 272px;
+  height: 43px;
+  border: 1px solid #707070;
+  color: #707070;
+  opacity: 1;
+  font-size: 25px;
+}
+
+button {
+  background-color: #8845f5;
+  border: 1px solid #707070;
+  color: #e3e3e3;
+  width: 150px;
+  height: 50px;
+  font-size: 21px;
+}
+
+.verified-user {
+  padding: 10px 100px;
+}
+
+span {
+  color: #707070;
+  font-size: 35px;
+}
+/*# sourceMappingURL=index.css.map */
