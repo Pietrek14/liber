@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ratingSchema = new Schema({
-	rating: Number, // 1 - 5 gwiazdek (z połówkami)
-	book: Number, // ID książki
+  rating: Number, // 1 - 5 gwiazdek (z połówkami)
+  book: String, // ID książki
 });
 
 const readerSchema = new Schema({
