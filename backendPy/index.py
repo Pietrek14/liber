@@ -1,5 +1,6 @@
-# przed uruchomieniem nalezy wlaczyc virtual enviroment
-# komenda env/Script/activate !!!
+# zainstaluj na pipei:
+# 	flask
+#	pymongo
 
 from flask import Flask, request, make_response
 import pandas as pd
@@ -13,13 +14,13 @@ app = Flask(__name__)
 # def index():
 #     return testing.test()
 
-@app.route('/recommendbooks', methods=['GET'])
+@app.route('/recommendbooks', methods=['POST'])
 def reccomend_books():
 	content = request.get_json()
 	user = content["user"]
 	book = content["book"]
 
-	# Zformatuj dane o ocenach użytkowników
+	# Formatuj dane o ocenach użytkowników
 	data = {
 		"item": [],
 		"user": [],
@@ -27,7 +28,7 @@ def reccomend_books():
 	}
 
 	df = pd.DataFrame(data)
-reader = Reader(rating_scale=(1, 5))
+	reader = Reader(rating_scale=(1, 5))
 
 if __name__ == '__main__':  
 	app.run(debug=True)
