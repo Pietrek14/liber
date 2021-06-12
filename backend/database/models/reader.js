@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ratingSchema = new Schema({
-  rating: Number, // 1 - 5 gwiazdek (z połówkami)
-  book: String, // ID książki
+	rating: Number, // 1 - 5 gwiazdek (z połówkami)
+	book: String, // ID książki
 });
 
 const readerSchema = new Schema({
@@ -15,6 +15,7 @@ const readerSchema = new Schema({
 	verification_code: String,
 	account_creation_date: { type: Date, default: Date.now },
 	whitelisted: { type: Boolean, default: false },
+	readBooks: [String], // przeczytane książki (id)
 });
 
 const Reader = mongoose.model("Reader", readerSchema);
