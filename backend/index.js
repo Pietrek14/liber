@@ -15,8 +15,6 @@ const verifyEmail = require("./endpoints/verifyEmail");
 const resendCode = require("./endpoints/resendCode");
 const changeUserData = require("./endpoints/changeUserData");
 const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
-const resetPassword = require("./endpoints/resetPassword");
-const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 const addRate = require("./endpoints/addRate");
 
 // GET
@@ -27,6 +25,7 @@ const resetPassword = require("./endpoints/resetPassword");
 const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 const getBookInfo = require("./endpoints/getBookInfo");
 const getAuthorBooks = require("./endpoints/getAuthorBooks");
+const getRates = require("./endpoints/getRates");
 
 // Middleware
 
@@ -80,6 +79,7 @@ app.use("/changeuserdata", loginCheck, changeUserData);
 // GET
 app.use("/getname", loginCheck, getName);
 app.use("/getemail", loginCheck, getEmail);
+app.use("/getrates", loginCheck, getRates);
 app.use("/getbookinfo", getBookInfo);
 app.use("/getauthorbooks", getAuthorBooks);
 

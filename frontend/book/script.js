@@ -19,9 +19,6 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const book = urlParams.get("book");
 
-let checkIfClicked = false;
-let rate = 0;
-
 // 60a6dedec11b102ca8443d03 - Autostopem przez Galaktykę
 // 60b2659f6e73e6cd63049bcd - Pan Tadeusz
 
@@ -44,6 +41,13 @@ const init = async () => {
 
   // Pobieramy informacje o książce
 
+  const data = await res.json();
+
+  if (res.status !== 200) {
+    alert(data.message);
+    return;
+  }
+
   const bookInfoRequest = await fetch(`${serverAddress}/getbookinfo/${book}`, {
     method: "GET",
     headers: {
@@ -58,6 +62,33 @@ const init = async () => {
   if (bookInfoRequest.status !== 200) {
     window.location = "../index.html";
     return;
+  }
+
+  // Pobieramy informacje o ocenach ksiazek uzytownika
+
+  const resRates = await fetch(`${serverAddress}/getrates`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (resRates.status !== 200) {
+    alert(data.message);
+    return;
+  }
+
+  const body = await resRates.json();
+  const rates = body.rates;
+  let bookRate;
+  let isBookRated = false;
+  for (let i = 0; i < rates.length; i++) {
+    if (rates[i].book === book) {
+      bookRate = rates[i];
+      isBookRated = true;
+      break;
+    }
   }
 
   // Ustaw pola na odpowiednie wartości
@@ -84,22 +115,25 @@ const init = async () => {
 
   //   Ocena książki
 
-  for (let i = 0; i < stars.length; i++) {
-    stars[i].onclick = async () => {
-      checkIfClicked = true;
-      for (let j = 0; j < 5; j++) {
-        if (j <= i) {
-          stars[j].classList.add("checked");
-        } else {
-          stars[j].className = "fa fa-star";
-        }
-      }
-      rating.textContent = `${i + 1}.0`;
-      rate = i + 1;
-      console.log(rate);
-    };
-    stars[i].onmouseover = async () => {
-      if (!checkIfClicked) {
+  let checkIfClicked = false;
+  let rate = 0;
+
+  if (!isBookRated) {
+    for (let i = 0; i < stars.length; i++) {
+      stars[i].onclick = async () => {
+        rate = i + 1;
+        const res3 = await fetch(`${serverAddress}/addrate`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            book: book,
+            rating: rate,
+          }),
+        });
+        checkIfClicked = true;
         for (let j = 0; j < 5; j++) {
           if (j <= i) {
             stars[j].classList.add("checked");
@@ -108,16 +142,57 @@ const init = async () => {
           }
         }
         rating.textContent = `${i + 1}.0`;
-      }
-      starsDiv.onmouseleave = async () => {
+      };
+      stars[i].onmouseover = () => {
         if (!checkIfClicked) {
           for (let j = 0; j < 5; j++) {
+            if (j <= i) {
+              stars[j].classList.add("checked");
+            } else {
+              stars[j].className = "fa fa-star";
+            }
+          }
+          rating.textContent = `${i + 1}.0`;
+        }
+        starsDiv.onmouseleave = () => {
+          if (!checkIfClicked) {
+            for (let j = 0; j < 5; j++) {
+              stars[j].className = "fa fa-star";
+            }
+            rating.textContent = `0.0`;
+          }
+        };
+      };
+    }
+  } else {
+    for (let i = 0; i < bookRate.rating; i++) {
+      stars[i].classList.add("checked");
+    }
+    rating.textContent = `${bookRate.rating}.0`;
+    for (let i = 0; i < stars.length; i++) {
+      stars[i].onclick = async () => {
+        rate = i + 1;
+        const res3 = await fetch(`${serverAddress}/addrate`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            book: book,
+            rating: rate,
+          }),
+        });
+        for (let j = 0; j < 5; j++) {
+          if (j <= i) {
+            stars[j].classList.add("checked");
+          } else {
             stars[j].className = "fa fa-star";
           }
-          rating.textContent = `0.0`;
         }
+        rating.textContent = `${i + 1}.0`;
       };
-    };
+    }
   }
 
   borrowButton.onclick = async () => {
