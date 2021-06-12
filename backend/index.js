@@ -17,16 +17,17 @@ const changeUserData = require("./endpoints/changeUserData");
 const sendPasswordChange = require("./endpoints/sendPasswordChangeCode");
 const borrowBook = require("./endpoints/borrowBook");
 const addRate = require("./endpoints/addRate");
+const resetPassword = require("./endpoints/resetPassword");
+const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 
 // GET
 
 const getName = require("./endpoints/getName");
 const getEmail = require("./endpoints/getEmail");
-const resetPassword = require("./endpoints/resetPassword");
-const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
 const getBookInfo = require("./endpoints/getBookInfo");
 const getAuthorBooks = require("./endpoints/getAuthorBooks");
 const getRates = require("./endpoints/getRates");
+const recommendBooks = require("./endpoints/recommendBooks");
 
 // Middleware
 
@@ -84,6 +85,7 @@ app.use("/getemail", loginCheck, getEmail);
 app.use("/getrates", loginCheck, getRates);
 app.use("/getbookinfo", getBookInfo);
 app.use("/getauthorbooks", getAuthorBooks);
+app.use("/recommendbooks", loginCheck, recommendBooks);
 
 // Routines
 setInterval(deleteOldUsers, DELETE_OLD_RECORDS_INTERVAL);

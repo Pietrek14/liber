@@ -48,10 +48,10 @@ def reccomend_books():
 	content = request.get_json()
 
 	if "user" not in content:
-		return "Nie podano użytkownika", 400
+		return json.dumps({"message": "Nie podano użytkownika"}), 400
 
 	if not ObjectId.is_valid(content["user"]):
-		return "Podano niepoprawnego użytkownika", 400
+		return json.dumps({"message": "Podano niepoprawnego użytkownika"}), 400
 
 	user = db.readers.find_one({"_id": ObjectId(content["user"])})
 	users = db.readers.find({})
@@ -66,6 +66,10 @@ def reccomend_books():
 	tags_data_users = []
 	tags_data_ratings = []
 
+	author_data_items = []
+	author_data_users = []
+	author_data_ratings = []
+
 	for user in users:
 		for rating in user["ratings"]:
 			data_items.append(rating["book"])
@@ -78,7 +82,10 @@ def reccomend_books():
 			for tag in book.tags:
 				tags_data_items.append(tag)
 				tags_data_users.append(str(user["_id"]))
-				tags_data_ratings.append(tag)
+				tags_data_ratings.append(rating["rating"])
+			author_data_items.append(book["author"])
+			author_data_users.append(str(user["_id"]))
+			author_data_users.append(rating["rating"])
 
 	# Formatuj dane o ocenach użytkowników
 	data = {
@@ -93,8 +100,15 @@ def reccomend_books():
 		"rating": tags_data_ratings,
 	}
 
+	author_data = {
+		"item": author_data_items,
+		"user": author_data_users,
+		"rating": author_data_ratings,
+	}
+
 	df = pd.DataFrame(data)
 	tags_df = pd.DataFrame(tags_data)
+	author_df = pd.DataFrame(author_data)
 
 	# Wytrenuj algorytm
 
@@ -102,6 +116,7 @@ def reccomend_books():
 
 	data = Dataset.load_from_df(df[["user", "item", "rating"]], reader)
 	tags_data = Dataset.load_from_df(tags_df[["user", "item", "rating"]], reader)
+	author_data = Dataset.load_from_df(author_df[["user", "item", "rating"]], reader)
 
 	sim_options = {
 		"name": "cosine",
@@ -110,12 +125,15 @@ def reccomend_books():
 
 	algo = KNNWithMeans(sim_options=sim_options)
 	tags_algo = KNNWithMeans(sim_options=sim_options)
+	author_algo = KNNWithMeans(sim_options=sim_options)
 
 	trainingSet = data.build_full_trainset()
 	tags_trainingSet = tags_data.build_full_trainset()
+	author_trainingSet = author_data.build_full_trainset()
 
 	algo.fit(trainingSet)
 	tags_algo.fit(tags_trainingSet)
+	author_algo.fit(author_trainingSet)
 
 	# Przydziel punkty
 
@@ -126,6 +144,8 @@ def reccomend_books():
 
 		for tag in book["tags"]:
 			points[index] += tags_algo.predict(user["_id"], tag).est * 250
+
+		points[index] += author_algo.predict(user["_id"], book["author"]).est * 500
 
 		# Staraj się nie pokazywać książek już przeczytanych przez czytelnika
 		if book in user["readBooks"]:
