@@ -45,55 +45,54 @@
   cursor: pointer;
 }
 
-.purple {
-  width: 38vw;
-  height: 100vh;
+header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  padding: 30px;
   background-color: #8845f5;
 }
 
-article {
-  width: 62vw;
-  height: 100vh;
-  gap: 70px;
+h1 {
+  font-weight: normal;
+  font-size: 65px;
 }
 
-@media (max-width: 768px) {
-  article {
-    width: 100vw;
-    gap: 50px;
-  }
-}
-
-h3 {
-  font-size: 82px;
-  font-weight: 300;
-  color: #707070;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-@media (max-width: 1200px) {
-  h3 {
-    font-size: 55px;
-  }
+h2 {
+  font-weight: normal;
+  font-size: 65px;
+  color: #8845f5;
 }
 
 h5 {
-  font-size: 30px;
-  font-weight: 300;
-  color: #707070;
-  text-align: center;
-  width: clamp(30ch, 50%, 75ch);
+  color: #9757ff;
+  font-size: 65px;
+  font-weight: normal;
 }
 
-@media (max-width: 1200px) {
-  h5 {
-    font-size: 21px;
-  }
+a {
+  color: #e3e3e3;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #e3e3e3;
+}
+
+h3 {
+  font-size: 55px;
+  font-weight: normal;
+  color: #707070;
 }
 
 section {
   gap: 15px;
+}
+
+hr {
+  border: 1px solid #707070;
+  opacity: 0.5;
 }
 
 form {
@@ -102,10 +101,25 @@ form {
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
-  padding: 10px;
-  min-width: 300px;
+input[type="email"],
+input[type="date"],
+textarea {
+  padding: 9px 1px;
+  width: 272px;
+  height: 43px;
   border: 1px solid #707070;
+  color: #707070;
+  opacity: 1;
+  font-size: 25px;
+}
+
+textarea {
+  height: 50px;
+}
+
+label {
+  color: #707070;
+  font-size: 25px;
 }
 
 button {
@@ -115,5 +129,22 @@ button {
   width: 150px;
   height: 50px;
   font-size: 21px;
+}
+
+.verified-user {
+  padding: 10px 100px;
+}
+
+span {
+  color: #707070;
+  font-size: 35px;
+}
+
+.underline {
+  margin-bottom: 1px solid #000;
+}
+
+.book {
+  background-color: #555;
 }
 /*# sourceMappingURL=index.css.map */

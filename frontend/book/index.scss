@@ -2,6 +2,10 @@
 @import "../sideBar";
 @import "../alert";
 
+body {
+	overflow-x: hidden;
+}
+
 .search-bar {
 	width: 500px;
 }

@@ -139,22 +139,25 @@ def reccomend_books():
 
 	for index, book in enumerate(books):
 		# Na podstawie AI
-		book_prediciton = algo.predict(user["_id"], book["_id"])
-		points[index] += book_prediciton.est * 1000
 
-		for tag in book["tags"]:
-			points[index] += tags_algo.predict(user["_id"], tag).est * 250
+		rated = False
+		
+		for rating in user["ratings"]:
+			if rating["book"] == str(book["_id"]):
+				rated = True
 
-		points[index] += author_algo.predict(user["_id"], book["author"]).est * 500
+		if not rated:
+			book_prediciton = algo.predict(user["_id"], book["_id"])
+			points[index] += book_prediciton.est * 1000
+
+			for tag in book["tags"]:
+				points[index] += tags_algo.predict(user["_id"], tag).est * 250
+
+			points[index] += author_algo.predict(user["_id"], book["author"]).est * 500
 
 		# Staraj się nie pokazywać książek już przeczytanych przez czytelnika
 		if book in user["readBooks"]:
 			points[index] -= 7000
-		else:
-			# Jeśli użytkownik ocenił książkę to prawdopodobnie już ją czytał
-			for rating in user["ratings"]:
-				if rating["book"] == str(book["_id"]):
-					points[index] -= 6000
 
 		# Preferuj książki niedawno dodane do biblioteki
 		points[index] -= (datetime.now() - book["addDate"]).total_seconds() * 0.02

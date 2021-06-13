@@ -2,7 +2,9 @@ const { app, BrowserWindow, ipcMain, ipcRenderer } = require("electron");
 const path = require("path");
 const mongoose = require("mongoose");
 const Reader = require("./models/reader");
+const Book = require("./models/book");
 const { registerBook } = require("./scripts/register");
+const { ObjectID } = require("mongodb");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -140,14 +142,27 @@ ipcMain.on("get-whitelisted-users", async (event, args) => {
 	event.returnValue = whitelistedUsers;
 });
 
+ipcMain.on("get-books", async (event, args) => {
+	const query = Book.find({});
+
+	const books = await query.exec();
+
+	console.log(books[0]._id.toString());
+
+	event.returnValue = books.map((book) => {
+		return { ...book._doc, id: book._id.toString() };
+	});
+});
+
+// ipcMain.on("get-id-from-id", async (event, args) => {
+// 	event.returnValue = args[0];
+// });
+
 /**
  * @param args Title, author, description, release date, publisher, cover URL, tags, content URL
  * @returns "book-register-successful" event (arg - book) if success; "book-register-failure" if failure
  */
 ipcMain.on("register-book", async (event, args) => {
-	console.log(args);
-	console.log(...args);
-
 	const book = await registerBook(
 		args[0],
 		args[1],
@@ -163,4 +178,15 @@ ipcMain.on("register-book", async (event, args) => {
 
 	if (book) event.reply("book-register-successful", book.title);
 	else event.reply("book-register-failure", "");
+});
+
+ipcMain.on("delete-book", async (event, arg) => {
+	console.log(arg);
+	Book.deleteOne({ _id: mongoose.Types.ObjectId(arg) })
+		.then(() => {
+			event.reply("book-deletion-successful");
+		})
+		.catch((err) => {
+			event.reply("book-deletion-failure", err);
+		});
 });
