@@ -157,7 +157,7 @@ def reccomend_books():
 					points[index] -= 6000
 
 		# Preferuj książki niedawno dodane do biblioteki
-		points[index] -= (datetime.now() - book["addDate"]).total_seconds() * 0.0002
+		points[index] -= (datetime.now() - book["addDate"]).total_seconds() * 0.02
 
 		# Dodaj punkty na podstawie średniej oceny książki
 		average_rating, ratingQuantity = averageRating(book["_id"])
@@ -168,7 +168,7 @@ def reccomend_books():
 			points[index] += 1000
 
 	# Posortuj książki na podstawie punktów
-	sorted_books = [str(book["_id"]) for _, book in sorted(zip(points, books), key=lambda pair: pair[0])]	# https://stackoverflow.com/questions/6618515/sorting-list-based-on-values-from-another-list
+	sorted_books = [str(book["_id"]) for _, book in sorted(zip(points, books), key=lambda pair: pair[0], reverse=True)]	# https://stackoverflow.com/questions/6618515/sorting-list-based-on-values-from-another-list
 
 	# Zwróć pierwsze 150 książek
 	return json.dumps(sorted_books[:150])
