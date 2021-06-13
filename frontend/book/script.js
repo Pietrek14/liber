@@ -64,8 +64,6 @@ const init = async () => {
 		return;
 	}
 
-	console.log("a");
-
 	// Sprawdż czy książka nie jest wypożyczona
 	const bookAvailableRequest = await fetch(
 		`${serverAddress}/checkifavailable/${book}`,
@@ -83,8 +81,6 @@ const init = async () => {
 		borrowButton.setAttribute("disabled", "true");
 		borrowButton.setAttribute("title", "Książka została wypożyczona");
 	}
-
-	console.log("b");
 
 	// Pobieramy informacje o ocenach ksiazek uzytownika
 
