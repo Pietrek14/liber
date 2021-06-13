@@ -42,6 +42,13 @@ nav {
 	background-color: $color-4;
 }
 
+.cool-button:disabled {
+	background-color: #555;
+	text-decoration: line-through;
+	cursor: pointer;
+	position: relative;
+}
+
 .search-bar {
 	border: 1px solid $color-2;
 	font-size: 21px;

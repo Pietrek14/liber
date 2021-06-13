@@ -177,6 +177,13 @@ nav {
   background-color: #b78ff7;
 }
 
+.cool-button:disabled {
+  background-color: #555;
+  text-decoration: line-through;
+  cursor: pointer;
+  position: relative;
+}
+
 .search-bar {
   border: 1px solid #707070;
   font-size: 21px;

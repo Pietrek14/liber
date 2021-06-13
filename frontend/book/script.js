@@ -64,6 +64,28 @@ const init = async () => {
 		return;
 	}
 
+	console.log("a");
+
+	// Sprawdż czy książka nie jest wypożyczona
+	const bookAvailableRequest = await fetch(
+		`${serverAddress}/checkifavailable/${book}`,
+		{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
+
+	const availableData = await bookAvailableRequest.json();
+
+	if (!availableData.available) {
+		borrowButton.setAttribute("disabled", "true");
+		borrowButton.setAttribute("title", "Książka została wypożyczona");
+	}
+
+	console.log("b");
+
 	// Pobieramy informacje o ocenach ksiazek uzytownika
 
 	const resRates = await fetch(`${serverAddress}/getrates`, {
@@ -197,6 +219,27 @@ const init = async () => {
 
 	borrowButton.onclick = async () => {
 		// Tutaj dodać wypożyczanie książki
+		const borrowRequest = await fetch(`${serverAddress}/borrowbook`, {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				book: book,
+			}),
+		});
+
+		const data = await borrowRequest.json();
+
+		if (!borrowRequest.ok) {
+			alert(data.message);
+			console.log(data.message);
+			return;
+		}
+
+		alert("Wypożyczono książkę");
+		// Przenieś do strony z wypożyczonymi książkami
 	};
 };
 

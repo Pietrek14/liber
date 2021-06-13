@@ -1,6 +1,7 @@
 const Reader = require("../models/reader");
 const Session = require("../models/session");
 const Book = require("../models/book");
+const Borrow = require("../models/borrow");
 const PasswordChange = require("../models/passwordChanges");
 const hash = require("../../hash");
 
