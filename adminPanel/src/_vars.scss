@@ -1,0 +1,17 @@
+@use "sass:map";
+
+$color-1: #8845f5;
+$color-2: #707070;
+$color-3: #e3e3e3;
+$color-4: #b78ff7;
+$color-5: #9757ff;
+$color-6: #412175;
+
+$bootstrap: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1200px,
+	xxl: 1400px,
+);
