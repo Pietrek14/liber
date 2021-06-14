@@ -27,7 +27,6 @@ function refreshBookList() {
 
 		// mongo jest retarded
 
-		console.log(book.id);
 		title.onclick = () => {
 			shell.openExternal(
 				`http://127.0.0.1:5500/frontend/book/index.html?book=${book.id}`
