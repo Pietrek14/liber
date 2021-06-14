@@ -12,13 +12,13 @@ submitButton.onclick = async (e) => {
 };
 
 function refreshWhitelistedUsers() {
-	const whitelistedUsers = ipcRenderer.sendSync("get-whitelisted-users");
+	const whitelistedUsers = JSON.parse(
+		ipcRenderer.sendSync("get-whitelisted-users")
+	);
 
 	whitelistedUsersDiv.innerHTML = "<hr />";
 
-	whitelistedUsers.forEach((record) => {
-		const user = record._doc;
-
+	whitelistedUsers.forEach((user) => {
 		const userDiv = document.createElement("div");
 
 		userDiv.classList.add("verified-user");
