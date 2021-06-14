@@ -2,11 +2,13 @@
 .borgar-menu {
   width: 58px;
   gap: 8px;
+  -webkit-transition: 1s;
   transition: 1s;
 }
 
 .borgar-menu.active {
-  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 
 .borgar-menu:hover {
@@ -29,6 +31,7 @@
   top: 0;
   padding: 100px 50px 25px 50px;
   width: 500px;
+  -webkit-transition: 1s;
   transition: 1s;
   background-color: #9757ff;
 }
@@ -64,6 +67,7 @@
   font-size: 30px;
   width: 100%;
   padding: 10px;
+  -webkit-transition: 0.5s;
   transition: 0.5s;
 }
 
@@ -81,7 +85,8 @@
   position: absolute;
   left: 15px;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
 .alert-box {
@@ -89,7 +94,8 @@
   pointer-events: none;
   top: 0;
   left: 50vw;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   width: 500px;
   height: 250px;
   padding: 10px;
@@ -97,6 +103,7 @@
   color: #e3e3e3;
   font-size: 0;
   opacity: 0;
+  -webkit-transition: 1500ms;
   transition: 1500ms;
 }
 
@@ -104,7 +111,8 @@
   display: block;
   pointer-events: auto;
   top: 50vh;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   opacity: 1;
   font-size: 15px;
 }
@@ -128,6 +136,7 @@
 }
 
 header {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100vw;
@@ -145,8 +154,10 @@ hr {
 
 .napisy {
   padding: 0px 100px;
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: auto auto;
+  -ms-grid-columns: auto auto;
+      grid-template-columns: auto auto;
   gap: 75px;
 }
 
@@ -171,7 +182,9 @@ nav {
   }
 }
 
-a, a:hover, a:visited {
+a,
+a:hover,
+a:visited {
   color: #e3e3e3;
   font-weight: normal;
   font-size: 65px;
@@ -187,6 +200,7 @@ input {
   width: 100%;
   height: 35px;
   background-color: #e3e3e3;
+  -webkit-transition: 1s;
   transition: 1s;
   color: #707070;
 }
@@ -208,5 +222,13 @@ input {
   width: 150px;
   height: 50px;
   font-size: 21px;
+}
+
+.tile {
+  background-color: #8845f5;
+  border: 2px solid black;
+  padding: 25px 5px;
+  color: white;
+  gap: 10px;
 }
 /*# sourceMappingURL=index.css.map */

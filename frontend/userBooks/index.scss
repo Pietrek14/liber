@@ -46,10 +46,12 @@ nav {
 	}
 }
 
-a, a:hover, a:visited {
-    color: #e3e3e3;
-    font-weight: normal;
-    font-size: 65px;
+a,
+a:hover,
+a:visited {
+	color: #e3e3e3;
+	font-weight: normal;
+	font-size: 65px;
 	text-decoration: none;
 }
 
@@ -83,4 +85,12 @@ input {
 	width: 150px;
 	height: 50px;
 	font-size: 21px;
+}
+
+.tile {
+	background-color: $color-1;
+	border: 2px solid black;
+	padding: 25px 5px;
+	color: white;
+	gap: 10px;
 }
