@@ -5,11 +5,11 @@ const mongoose = require("mongoose");
 const bookList = document.getElementById("book-list");
 
 function refreshBookList() {
+	bookList.innerHtml = "";
+
 	const books = ipcRenderer.sendSync("get-books");
 
 	books.forEach((book) => {
-		console.log(book);
-
 		const div = document.createElement("div");
 
 		div.classList.add("book");
