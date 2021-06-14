@@ -1,0 +1,86 @@
+@import "../vars";
+@import "../sideBar";
+@import "../alert";
+
+header {
+	position: sticky;
+	top: 0;
+	width: 100vw;
+	padding: 30px;
+	background-color: $color-1;
+}
+
+.content {
+	padding: 50px 160px;
+}
+
+hr {
+	width: 90%;
+}
+
+.napisy {
+	padding: 0px 100px;
+	display: grid;
+	grid-template-columns: auto auto;
+	gap: 75px;
+}
+
+.fajne-napisy {
+	color: $color-2;
+	font-size: 25px;
+}
+
+h1 {
+	color: $color-2;
+	font-weight: normal;
+	font-size: 115px;
+}
+
+nav {
+	gap: 100px;
+}
+
+@media (max-width: map-get($bootstrap, "md")) {
+	nav {
+		gap: 10px;
+	}
+}
+
+a, a:hover, a:visited {
+    color: #e3e3e3;
+    font-weight: normal;
+    font-size: 65px;
+	text-decoration: none;
+}
+
+input {
+	clear: both;
+}
+
+.cool-button {
+	border: 0;
+	width: 100%;
+	height: 35px;
+	background-color: $color-3;
+	transition: 1s;
+	color: $color-2;
+}
+
+.cool-button:hover {
+	background-color: $color-4;
+}
+
+@media (max-width: map-get($bootstrap, "lg")) {
+	.search-bar {
+		width: 300px;
+	}
+}
+
+.nice-button {
+	background-color: $color-1;
+	border: 1px solid $color-2;
+	color: $color-3;
+	width: 150px;
+	height: 50px;
+	font-size: 21px;
+}

@@ -4,8 +4,7 @@
   pointer-events: none;
   top: 0;
   left: 50vw;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
   width: 500px;
   height: 250px;
   padding: 10px;
@@ -13,7 +12,6 @@
   color: #e3e3e3;
   font-size: 0;
   opacity: 0;
-  -webkit-transition: 1500ms;
   transition: 1500ms;
 }
 
@@ -21,8 +19,7 @@
   display: block;
   pointer-events: auto;
   top: 50vh;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   opacity: 1;
   font-size: 15px;
 }
@@ -46,7 +43,6 @@
 }
 
 header {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100vw;

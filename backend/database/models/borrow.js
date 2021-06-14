@@ -6,6 +6,7 @@ const borrowSchema = new Schema({
 	borrow_date: { type: Date, default: Date.now },
 	book: String, // ID książki
 	user: String, // ID użytkownika
+	received: Boolean, // czy ksiazka zostala wypozyvzona
 });
 
 const Borrow = mongoose.model("Borrow", borrowSchema);
