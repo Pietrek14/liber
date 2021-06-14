@@ -10,7 +10,7 @@ const cover = document.getElementById("cover");
 const rating = document.getElementById("rating");
 
 const starsDiv = document.getElementById("stars");
-const stars = starsDiv.children;
+const stars = Array.from(starsDiv.children);
 
 const borrowButton = document.getElementById("borrow-button");
 const readButton = document.getElementById("read-button");
@@ -41,6 +41,13 @@ const init = async () => {
 
 	// Pobieramy informacje o książce
 
+	const data = await res.json();
+
+	if (res.status !== 200) {
+		alert(data.message);
+		return;
+	}
+
 	const bookInfoRequest = await fetch(`${serverAddress}/getbookinfo/${book}`, {
 		method: "GET",
 		headers: {
@@ -57,6 +64,51 @@ const init = async () => {
 		return;
 	}
 
+	// Sprawdż czy książka nie jest wypożyczona
+	const bookAvailableRequest = await fetch(
+		`${serverAddress}/checkifavailable/${book}`,
+		{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
+
+	const availableData = await bookAvailableRequest.json();
+
+	if (!availableData.available) {
+		borrowButton.setAttribute("disabled", "true");
+		borrowButton.setAttribute("title", "Książka została wypożyczona");
+	}
+
+	// Pobieramy informacje o ocenach ksiazek uzytownika
+
+	const resRates = await fetch(`${serverAddress}/getrates`, {
+		method: "GET",
+		credentials: "include",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	if (resRates.status !== 200) {
+		alert(data.message);
+		return;
+	}
+
+	const body = await resRates.json();
+	const rates = body.rates;
+	let bookRate;
+	let isBookRated = false;
+	for (let i = 0; i < rates.length; i++) {
+		if (rates[i].book === book) {
+			bookRate = rates[i];
+			isBookRated = true;
+			break;
+		}
+	}
+
 	// Ustaw pola na odpowiednie wartości
 
 	title.textContent = bookInfo.title;
@@ -71,7 +123,7 @@ const init = async () => {
 
 	// Jeśli książka jest dostępna do czytania online, to też ustaw
 
-	if (bookInfo.content !== null) {
+	if (bookInfo.content) {
 		readButton.onclick = () => {
 			window.open(bookInfo.content);
 		};
@@ -79,10 +131,111 @@ const init = async () => {
 		readButton.classList.add("d-none");
 	}
 
-	// Tutaj dodać ocenianie książki przez użytkownika
+	//   Ocena książki
+
+	let checkIfClicked = false;
+	let rate = 0;
+
+	if (!isBookRated) {
+		for (let i = 0; i < stars.length; i++) {
+			stars[i].onclick = async () => {
+				rate = i + 1;
+				const res3 = await fetch(`${serverAddress}/addrate`, {
+					method: "POST",
+					credentials: "include",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						book: book,
+						rating: rate,
+					}),
+				});
+				checkIfClicked = true;
+				for (let j = 0; j < 5; j++) {
+					if (j <= i) {
+						stars[j].classList.add("checked");
+					} else {
+						stars[j].className = "fa fa-star";
+					}
+				}
+				rating.textContent = `${i + 1}.0`;
+			};
+			stars[i].onmouseover = () => {
+				if (!checkIfClicked) {
+					for (let j = 0; j < 5; j++) {
+						if (j <= i) {
+							stars[j].classList.add("checked");
+						} else {
+							stars[j].className = "fa fa-star";
+						}
+					}
+					rating.textContent = `${i + 1}.0`;
+				}
+				starsDiv.onmouseleave = () => {
+					if (!checkIfClicked) {
+						for (let j = 0; j < 5; j++) {
+							stars[j].className = "fa fa-star";
+						}
+						rating.textContent = `0.0`;
+					}
+				};
+			};
+		}
+	} else {
+		for (let i = 0; i < bookRate.rating; i++) {
+			stars[i].classList.add("checked");
+		}
+		rating.textContent = `${bookRate.rating}.0`;
+		for (let i = 0; i < stars.length; i++) {
+			stars[i].onclick = async () => {
+				rate = i + 1;
+				const res3 = await fetch(`${serverAddress}/addrate`, {
+					method: "POST",
+					credentials: "include",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						book: book,
+						rating: rate,
+					}),
+				});
+				for (let j = 0; j < 5; j++) {
+					if (j <= i) {
+						stars[j].classList.add("checked");
+					} else {
+						stars[j].className = "fa fa-star";
+					}
+				}
+				rating.textContent = `${i + 1}.0`;
+			};
+		}
+	}
 
 	borrowButton.onclick = async () => {
 		// Tutaj dodać wypożyczanie książki
+		const borrowRequest = await fetch(`${serverAddress}/borrowbook`, {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				book: book,
+			}),
+		});
+
+		const data = await borrowRequest.json();
+
+		if (!borrowRequest.ok) {
+			alert(data.message);
+			console.log(data.message);
+			return;
+		}
+
+		alert("Wypożyczono książkę");
+		// Przenieś do strony z wypożyczonymi książkami
 	};
 };
 

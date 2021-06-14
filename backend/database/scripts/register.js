@@ -1,6 +1,7 @@
 const Reader = require("../models/reader");
 const Session = require("../models/session");
 const Book = require("../models/book");
+const Borrow = require("../models/borrow");
 const PasswordChange = require("../models/passwordChanges");
 const hash = require("../../hash");
 
@@ -89,17 +90,40 @@ async function registerPasswordChange(email, code) {
 		code: code,
 		lifetime: 43200000, // 12h in ms
 	});
-	
+
 	passwordChange.save((err, passwordChange) => {
 		if (err) {
 			console.error(err);
 			return false;
 		}
-		
+
 		console.log(`Zarejestrowano sesję zmiany hasla: ${email}`);
 	});
 	return passwordChange;
-
 }
 
-module.exports = { registerReader, registerSession, registerBook, registerPasswordChange };
+async function registerBorrow(user, book) {
+	const borrow = new Borrow({
+		user: user,
+		book: book,
+	});
+
+	borrow.save((err, borrow) => {
+		if (err) {
+			console.error(err);
+			return;
+		}
+
+		console.log(`Wypożyczono książkę: ${book}`);
+	});
+
+	return borrow;
+}
+
+module.exports = {
+	registerReader,
+	registerSession,
+	registerBook,
+	registerPasswordChange,
+	registerBorrow,
+};

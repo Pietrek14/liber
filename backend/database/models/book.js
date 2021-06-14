@@ -6,6 +6,7 @@ const bookSchema = new Schema({
 	author: String,
 	description: String,
 	releaseDate: Date,
+	addDate: { type: Date, default: Date.now() },
 	publisher: String,
 	coverUrl: String, // URL do okładki
 	tags: [String],
