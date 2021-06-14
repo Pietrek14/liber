@@ -2,7 +2,6 @@ import { serverAddress } from "../scripts/constants.js";
 
 const content = document.getElementById("content");
 
-
 // znowu z internetu
 // dodaje dni do daty
 Date.prototype.addDays = function(days) {
@@ -99,17 +98,39 @@ const init = async () => {
 		tile.appendChild(p2);
 		tile.appendChild(p3);
 
+		const delete_button = document.createElement("button");
+		delete_button.setAttribute("id", "delete_button");
+		delete_button.setAttribute("class", "cool-button");
+		delete_button.innerText = "Usuń wypożyczenie";
+		tile.appendChild(delete_button);
+
+		
 		content.appendChild(tile);
 
+		delete_button.onclick = async () => {
+			const res = await fetch(`${serverAddress}/deleteborrow`, {
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					id: borrow._id,
+				}),
+			});
+		
+			if (res.status === 200) {
+				window.location = "../userBooks/";
+				return;
+			}
+		
+			const data = await res.json();
+		
+			alert(data.message);
+		};
+		
+
 	});
-
-	
-	
-
-
-	// console.log(`Witaj, ${name}! o email ${email}`);
-	// nameContent.innerText = `Nazwa: ${name}`;
-	// emailContent.innerText = `Email: ${email}`;
 };
 
 init();
@@ -117,7 +138,3 @@ init();
 // side menu stuff 
 import setUpSideBar from "../scripts/sideBar.js";
 setUpSideBar("../login/");
-
-
-
-// przyciski shite hee`

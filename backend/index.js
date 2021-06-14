@@ -19,6 +19,7 @@ const borrowBook = require("./endpoints/borrowBook");
 const addRate = require("./endpoints/addRate");
 const resetPassword = require("./endpoints/resetPassword");
 const checkChangePasswordCode = require("./endpoints/checkChangePasswordCode");
+const deleteBorrow = require("./endpoints/deleteBorrow");
 
 // GET
 
@@ -80,6 +81,7 @@ app.use("/checkchangepasswordcode", checkChangePasswordCode);
 app.use("/addrate", loginCheck, addRate);
 app.use("/changeuserdata", loginCheck, changeUserData);
 app.use("/borrowbook", loginCheck, borrowBook);
+app.use("/deleteborrow", loginCheck ,deleteBorrow);
 
 // GET
 app.use("/getname", loginCheck, getName);
