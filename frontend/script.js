@@ -60,4 +60,4 @@ init();
 
 import setUpSideBar from "./scripts/sideBar.js";
 
-setUpSideBar("./login/", "./user/");
+setUpSideBar("./login/", "./user/", "./userBooks/");

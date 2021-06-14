@@ -1,8 +1,15 @@
-const { app, BrowserWindow, ipcMain, ipcRenderer } = require("electron");
+const {
+	app,
+	BrowserWindow,
+	ipcMain,
+	ipcRenderer,
+	BrowserWindowProxy,
+} = require("electron");
 const path = require("path");
 const mongoose = require("mongoose");
 const Reader = require("./models/reader");
 const Book = require("./models/book");
+const Borrow = require("./models/borrow");
 const { registerBook } = require("./scripts/register");
 const { ObjectID } = require("mongodb");
 
@@ -181,7 +188,9 @@ ipcMain.on("register-book", async (event, args) => {
 });
 
 ipcMain.on("delete-book", async (event, arg) => {
-	console.log(arg);
+	Borrow.deleteOne({ book: mongoose.Types.ObjectId(arg) }).catch((err) => {
+		event.reply("book-deletion-failure", err);
+	});
 	Book.deleteOne({ _id: mongoose.Types.ObjectId(arg) })
 		.then(() => {
 			event.reply("book-deletion-successful");

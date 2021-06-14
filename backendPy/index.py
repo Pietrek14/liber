@@ -19,7 +19,7 @@ import json
 
 app = Flask(__name__)
 
-client = pymongo.MongoClient("mongodb+srv://admin:admin@liber.4efko.mongodb.net/liber?retryWrites=true&w=majority", 27017)
+client = pymongo.MongoClient("mongodb+srv://admin:admin@liber.4efko.mongodb.net/liber?retryWrites=true&w=majority", 27017, tls = True, tlsAllowInvalidCertificates=True)
 db = client.liber
 
 # @app.route('/test', methods=['POST', 'GET'])
