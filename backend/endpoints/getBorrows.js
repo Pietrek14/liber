@@ -3,7 +3,6 @@
 // jesli nie ma to wysyla..... nie wiem......np "LOOOL"
 
 const { Router } = require("express");
-const Reader = require("../database/models/reader");
 const Borrows = require("../database/models/borrow");
 // const Book = require("../database/models/book");	//moze sie potem przyda
 
