@@ -5,11 +5,11 @@ const mongoose = require("mongoose");
 const bookList = document.getElementById("book-list");
 
 function refreshBookList() {
+	bookList.innerHtml = "";
+
 	const books = ipcRenderer.sendSync("get-books");
 
 	books.forEach((book) => {
-		console.log(book);
-
 		const div = document.createElement("div");
 
 		div.classList.add("book");
@@ -27,7 +27,6 @@ function refreshBookList() {
 
 		// mongo jest retarded
 
-		console.log(book.id);
 		title.onclick = () => {
 			shell.openExternal(
 				`http://127.0.0.1:5500/frontend/book/index.html?book=${book.id}`

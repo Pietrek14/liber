@@ -72,4 +72,5 @@ ipcRenderer.on("book-register-failure", (event, arg) => {
 
 ipcRenderer.on("book-register-successful", (event, arg) => {
 	alert(`Dodano książkę ${arg}.`);
+	window.location = "../bookList/index.html";
 });

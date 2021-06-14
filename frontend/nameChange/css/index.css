@@ -75,7 +75,8 @@ button {
   position: fixed;
   top: 0;
   left: 50vw;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   width: 500px;
   height: 250px;
   padding: 10px;
@@ -83,12 +84,14 @@ button {
   color: #e3e3e3;
   font-size: 0;
   opacity: 0;
+  -webkit-transition: 1500ms;
   transition: 1500ms;
 }
 
 .alert-box.active {
   top: 50vh;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   opacity: 1;
   font-size: 15px;
 }

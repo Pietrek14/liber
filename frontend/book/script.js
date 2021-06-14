@@ -234,8 +234,8 @@ const init = async () => {
 			return;
 		}
 
-		alert("Wypożyczono książkę");
 		// Przenieś do strony z wypożyczonymi książkami
+		window.location = "../userBooks/index.html";
 	};
 };
 
