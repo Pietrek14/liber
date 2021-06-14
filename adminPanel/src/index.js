@@ -146,7 +146,7 @@ ipcMain.on("get-whitelisted-users", async (event, args) => {
 
 	const whitelistedUsers = await query.exec();
 
-	event.returnValue = whitelistedUsers;
+	event.returnValue = JSON.stringify(whitelistedUsers);
 });
 
 ipcMain.on("get-books", async (event, args) => {
@@ -154,11 +154,41 @@ ipcMain.on("get-books", async (event, args) => {
 
 	const books = await query.exec();
 
-	console.log(books[0]._id.toString());
-
 	event.returnValue = books.map((book) => {
 		return { ...book._doc, id: book._id.toString() };
 	});
+});
+
+ipcMain.on("get-book-by-id", async (event, id) => {
+	const book = await Book.findById(mongoose.Types.ObjectId(id));
+	event.returnValue = JSON.stringify(book);
+});
+
+ipcMain.on("get-user-by-id", async (event, id) => {
+	const user = await Reader.findById(mongoose.Types.ObjectId(id));
+
+	event.returnValue = { ...user._doc, id: user._id.toString() };
+});
+
+ipcMain.on("get-user-borrows", async (event, user) => {
+	const query = Borrow.find({ user: user });
+
+	const borrows = await query.exec();
+
+	event.returnValue = borrows.map((borrow) => {
+		return { ...borrow._doc, id: borrow._id.toString() };
+	});
+});
+
+ipcMain.on("borrow-received", async (event, borrow) => {
+	await Borrow.updateOne(
+		{ _id: mongoose.Types.ObjectId(borrow) },
+		{ received: true }
+	).catch((e) => {
+		event.reply("borrow-received-failure", e);
+	});
+
+	event.reply("borrow-received-success", "");
 });
 
 // ipcMain.on("get-id-from-id", async (event, args) => {

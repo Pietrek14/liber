@@ -1,0 +1,77 @@
+@import "../vars";
+@import "../alert";
+
+header {
+	position: sticky;
+	top: 0;
+	width: 100vw;
+	padding: 30px;
+	background-color: $color-1;
+}
+
+h1 {
+	font-weight: normal;
+	font-size: 65px;
+}
+
+a {
+	color: $color-3;
+	text-decoration: none;
+}
+
+a:hover {
+	color: $color-3;
+}
+
+h3 {
+	font-size: 55px;
+	font-weight: normal;
+	color: $color-2;
+}
+
+section {
+	gap: 15px;
+}
+
+hr {
+	border: 1px solid $color-2;
+	opacity: 0.5;
+}
+
+form {
+	gap: 25px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+	padding: 9px 1px;
+	width: 272px;
+	height: 43px;
+	border: 1px solid $color-2;
+	color: $color-2;
+	opacity: 1;
+	font-size: 25px;
+}
+
+button {
+	background-color: $color-1;
+	border: 1px solid $color-2;
+	color: $color-3;
+	width: 400px;
+	height: 50px;
+	font-size: 21px;
+}
+
+.verified-user {
+	padding: 10px 100px;
+}
+
+span {
+	color: $color-2;
+	font-size: 35px;
+}
+
+.borrow-list > div {
+	background-color: #555;
+}
