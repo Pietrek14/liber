@@ -29,6 +29,7 @@ const getAuthorBooks = require("./endpoints/getAuthorBooks");
 const getRates = require("./endpoints/getRates");
 const recommendBooks = require("./endpoints/recommendBooks");
 const checkIfAvailable = require("./endpoints/checkIfAvailable");
+const getBorrows = require("./endpoints/getBorrows");
 
 // Middleware
 
@@ -88,6 +89,7 @@ app.use("/getbookinfo", getBookInfo);
 app.use("/getauthorbooks", getAuthorBooks);
 app.use("/recommendbooks", loginCheck, recommendBooks);
 app.use("/checkifavailable", checkIfAvailable);
+app.use("/getborrows", loginCheck, getBorrows);
 
 // Routines
 setInterval(deleteOldUsers, DELETE_OLD_RECORDS_INTERVAL);
