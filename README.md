@@ -1,1 +1,2 @@
-sexs
+# Liber
+It's a group school project of a library weppage. It also includes an admin panel, that would be used by the librarian. It uses an AI alghorithm to recommend books for users based on how they rate other books they have read. It consists of two separete backend communicating with each other - main in Javascript and the AI part in Python - as it was requested by our teacher. It won't work because the database is dead, though you can look through the code if you really have to.
